@@ -1,6 +1,4 @@
-
-#ifndef LAB_01_OPERATION_MANAGER_HPP
-#define LAB_01_OPERATION_MANAGER_HPP
+#pragma once
 
 #include "operations/load.hpp"
 #include "operations/render.hpp"
@@ -32,5 +30,3 @@ struct op_params
 };
 
 int perform_operation(op_params parameters);
-
-#endif //LAB_01_OPERATION_MANAGER_HPP

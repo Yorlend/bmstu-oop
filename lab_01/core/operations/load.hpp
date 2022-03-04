@@ -1,12 +1,7 @@
-
-#ifndef LAB_01_LOAD_HPP
-#define LAB_01_LOAD_HPP
+#pragma once
 
 
 struct load_params
 {
 
 };
-
-
-#endif //LAB_01_LOAD_HPP
