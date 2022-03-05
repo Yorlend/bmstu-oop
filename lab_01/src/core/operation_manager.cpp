@@ -16,7 +16,7 @@ int perform_operation(op_params parameters)
             break;
         case RESIZE:
             break;
-        case QUIT:
+        case EXIT:
             break;
     }
 
