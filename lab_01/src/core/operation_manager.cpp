@@ -4,11 +4,16 @@
 
 int perform_operation(op_params parameters)
 {
+    static model model = init_model();
+    int status = NO_ERRORS;
+
     switch (parameters.op)
     {
         case LOAD:
+            status = load_model(model, parameters.loading);
             break;
         case RENDER:
+            status = render(parameters.rendering, model);
             break;
         case MOVE:
             break;
@@ -20,5 +25,5 @@ int perform_operation(op_params parameters)
             break;
     }
 
-    return SUCCESS;
+    return status;
 }
