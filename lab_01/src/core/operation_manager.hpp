@@ -1,5 +1,6 @@
 #pragma once
 
+#include "utils/var_types.hpp"
 #include "operations/load.hpp"
 #include "operations/render.hpp"
 #include "operations/move.hpp"
@@ -13,7 +14,7 @@ enum operation
     MOVE,
     ROTATE,
     RESIZE,
-    QUIT
+    EXIT
 };
 
 struct op_params
@@ -29,4 +30,4 @@ struct op_params
     };
 };
 
-int perform_operation(op_params parameters);
+int perform_operation(VAR op_params parameters);
