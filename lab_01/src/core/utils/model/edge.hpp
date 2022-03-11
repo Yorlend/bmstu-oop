@@ -16,6 +16,8 @@ struct edge_array
 };
 
 edge_array init_edges();
+int copy(OUT edge_array& destination, IN const edge_array& source);
+
 bool is_valid(IN const edge_array& edges);
 
 int allocate_edges(OUT edge_array& edges, IN size_t size);

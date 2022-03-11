@@ -17,6 +17,9 @@ MainWindow::MainWindow(QWidget *parent) :
     canvas->setMinimumSize(QSize(600, 600));
 
     connect(ui->actionLoad, &QAction::triggered, this, &MainWindow::load);
+    connect(ui->moveButton, &QPushButton::clicked, this, &MainWindow::move);
+    connect(ui->rotateButton, &QPushButton::clicked, this, &MainWindow::rotate);
+    connect(ui->scaleButton, &QPushButton::clicked, this, &MainWindow::resize);
 }
 
 MainWindow::~MainWindow()
@@ -65,8 +68,60 @@ void MainWindow::render()
     qDebug() << "render status: " << status;
 }
 
-void MainWindow::resizeEvent(QResizeEvent *event) {
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
     QWidget::resizeEvent(event);
 
     render();
+}
+
+void MainWindow::move()
+{
+    move_params moving{};
+    moving.dx = ui->dxSpinBox->value();
+    moving.dy = ui->dySpinBox->value();
+    moving.dz = ui->dzSpinBox->value();
+
+    op_params params{ .op = MOVE, .moving = moving};
+
+    int status = perform_operation(params);
+    render();
+
+    qDebug() << "move status: " << status;
+}
+
+void MainWindow::rotate()
+{
+    rotate_params rotating{};
+    rotating.cx = ui->cxSpinBox->value();
+    rotating.cy = ui->cySpinBox->value();
+    rotating.cz = ui->czSpinBox->value();
+    rotating.ax = ui->axSpinBox->value();
+    rotating.ay = ui->aySpinBox->value();
+    rotating.az = ui->azSpinBox->value();
+
+    op_params params{ .op = ROTATE, .rotating = rotating };
+
+    int status = perform_operation(params);
+    render();
+
+    qDebug() << "rotate status: " << status;
+}
+
+void MainWindow::resize()
+{
+    resize_params resizing{};
+    resizing.cx = ui->cxSpinBox->value();
+    resizing.cy = ui->cySpinBox->value();
+    resizing.cz = ui->czSpinBox->value();
+    resizing.kx = ui->kxSpinBox->value();
+    resizing.ky = ui->kySpinBox->value();
+    resizing.kz = ui->kzSpinBox->value();
+
+    op_params params{ .op = RESIZE, .resizing = resizing };
+
+    int status = perform_operation(params);
+    render();
+
+    qDebug() << "resize status: " << status;
 }

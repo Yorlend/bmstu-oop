@@ -25,6 +25,9 @@ protected:
 public slots:
     void load();
     void render();
+    void move();
+    void rotate();
+    void resize();
 
 private:
     Ui::main_window *ui;

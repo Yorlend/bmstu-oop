@@ -1,6 +1,7 @@
 #include "vertex.hpp"
 #include "core/utils/error_codes.hpp"
 #include <cstdlib>
+#include <cstring>
 
 vertex_array init_vertices()
 {
@@ -10,6 +11,25 @@ vertex_array init_vertices()
     res_vertices.size = 0;
 
     return res_vertices;
+}
+
+int copy(OUT vertex_array& destination, IN const vertex_array& source)
+{
+    int status = ARGS_ERROR;
+    if (is_valid(source))
+    {
+        destination.data = (vertex*) malloc(source.size * sizeof(vertex));
+        if (destination.data == nullptr)
+            status = MEMORY_ERROR;
+        else
+        {
+            memcpy(destination.data, source.data, source.size * sizeof(vertex));
+            destination.size = source.size;
+            status = NO_ERRORS;
+        }
+    }
+
+    return status;
 }
 
 bool is_valid(IN const vertex_array& vertices)

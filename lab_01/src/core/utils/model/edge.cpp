@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <cstring>
 #include "edge.hpp"
 #include "core/utils/error_codes.hpp"
 
@@ -10,6 +11,25 @@ edge_array init_edges()
     res_edges.size = 0;
 
     return res_edges;
+}
+
+int copy(OUT edge_array& destination, IN const edge_array& source)
+{
+    int status = ARGS_ERROR;
+    if (is_valid(source))
+    {
+        destination.data = (edge*) malloc(source.size * sizeof(edge));
+        if (destination.data == nullptr)
+            status = MEMORY_ERROR;
+        else
+        {
+            memcpy(destination.data, source.data, source.size * sizeof(edge));
+            destination.size = source.size;
+            status = NO_ERRORS;
+        }
+    }
+
+    return status;
 }
 
 bool is_valid(IN const edge_array& edges)

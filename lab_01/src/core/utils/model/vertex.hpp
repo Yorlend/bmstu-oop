@@ -17,6 +17,8 @@ struct vertex_array
 };
 
 vertex_array init_vertices();
+int copy(OUT vertex_array& destination, IN const vertex_array& source);
+
 bool is_valid(IN const vertex_array& vertices);
 
 int allocate_vertices(OUT vertex_array& verts, IN size_t size);

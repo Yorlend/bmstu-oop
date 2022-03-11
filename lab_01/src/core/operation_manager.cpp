@@ -16,10 +16,13 @@ int perform_operation(op_params parameters)
             status = render(parameters.rendering, model);
             break;
         case MOVE:
+            status = move(model, parameters.moving);
             break;
         case ROTATE:
+            status = rotate(model, parameters.rotating);
             break;
         case RESIZE:
+            status = resize(model, parameters.resizing);
             break;
         case EXIT:
             break;

@@ -10,6 +10,8 @@ struct model
 };
 
 model init_model();
+int copy(OUT model& destination, IN const model& source);
+
 bool is_valid(IN const model& model);
 
 int read_model(OUT model& model, IN FILE* file);

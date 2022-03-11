@@ -11,6 +11,22 @@ model init_model()
     return res_model;
 }
 
+int copy(OUT model& destination, IN const model& source)
+{
+    int status = ARGS_ERROR;
+    if (is_valid(source))
+    {
+        status = copy(destination.vertices, source.vertices);
+        if (status == NO_ERRORS)
+            status = copy(destination.edges, source.edges);
+
+        if (status != NO_ERRORS)
+            free_model(destination);
+    }
+
+    return status;
+}
+
 bool is_valid(IN const model& model)
 {
     return is_valid(model.vertices) && is_valid(model.edges);
