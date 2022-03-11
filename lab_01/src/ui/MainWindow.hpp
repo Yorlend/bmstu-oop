@@ -3,6 +3,7 @@
 #define LAB_01_MAIN_WINDOW_HPP
 
 #include <QMainWindow>
+#include "Canvas.hpp"
 #include "core/utils/projection/projection.hpp"
 
 
@@ -18,16 +19,17 @@ public:
 
     ~MainWindow() override;
 
+protected:
+    void resizeEvent(QResizeEvent* event) override;
+
 public slots:
     void load();
     void render();
 
-protected:
-    void paintEvent(QPaintEvent *event) override;
-
 private:
     Ui::main_window *ui;
     projection proj;
+    Canvas* canvas;
 };
 
 

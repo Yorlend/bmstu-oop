@@ -22,7 +22,7 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_7">
     <item>
-     <widget class="QWidget" name="widget" native="true">
+     <widget class="QWidget" name="canvas" native="true">
       <property name="minimumSize">
        <size>
         <width>600</width>
@@ -44,6 +44,9 @@
         </item>
         <item>
          <widget class="QDoubleSpinBox" name="dxSpinBox">
+          <property name="decimals">
+           <number>0</number>
+          </property>
           <property name="minimum">
            <double>-1000.000000000000000</double>
           </property>
@@ -61,6 +64,9 @@
         </item>
         <item>
          <widget class="QDoubleSpinBox" name="dySpinBox">
+          <property name="decimals">
+           <number>0</number>
+          </property>
           <property name="minimum">
            <double>-1000.000000000000000</double>
           </property>
@@ -78,6 +84,9 @@
         </item>
         <item>
          <widget class="QDoubleSpinBox" name="dzSpinBox">
+          <property name="decimals">
+           <number>0</number>
+          </property>
           <property name="minimum">
            <double>-1000.000000000000000</double>
           </property>
@@ -123,6 +132,9 @@
         </item>
         <item>
          <widget class="QDoubleSpinBox" name="cxSpinBox">
+          <property name="decimals">
+           <number>0</number>
+          </property>
           <property name="minimum">
            <double>-1000.000000000000000</double>
           </property>
@@ -140,6 +152,9 @@
         </item>
         <item>
          <widget class="QDoubleSpinBox" name="cySpinBox">
+          <property name="decimals">
+           <number>0</number>
+          </property>
           <property name="minimum">
            <double>-1000.000000000000000</double>
           </property>
@@ -157,6 +172,9 @@
         </item>
         <item>
          <widget class="QDoubleSpinBox" name="czSpinBox">
+          <property name="decimals">
+           <number>0</number>
+          </property>
           <property name="minimum">
            <double>-1000.000000000000000</double>
           </property>
@@ -178,6 +196,9 @@
         </item>
         <item>
          <widget class="QDoubleSpinBox" name="kxSpinBox">
+          <property name="decimals">
+           <number>0</number>
+          </property>
           <property name="minimum">
            <double>-1000.000000000000000</double>
           </property>
@@ -195,6 +216,9 @@
         </item>
         <item>
          <widget class="QDoubleSpinBox" name="kySpinBox">
+          <property name="decimals">
+           <number>0</number>
+          </property>
           <property name="minimum">
            <double>-1000.000000000000000</double>
           </property>
@@ -212,6 +236,9 @@
         </item>
         <item>
          <widget class="QDoubleSpinBox" name="kzSpinBox">
+          <property name="decimals">
+           <number>0</number>
+          </property>
           <property name="minimum">
            <double>-1000.000000000000000</double>
           </property>
@@ -233,6 +260,9 @@
         </item>
         <item>
          <widget class="QDoubleSpinBox" name="axSpinBox">
+          <property name="decimals">
+           <number>0</number>
+          </property>
           <property name="minimum">
            <double>-1000.000000000000000</double>
           </property>
@@ -250,6 +280,9 @@
         </item>
         <item>
          <widget class="QDoubleSpinBox" name="aySpinBox">
+          <property name="decimals">
+           <number>0</number>
+          </property>
           <property name="minimum">
            <double>-1000.000000000000000</double>
           </property>
@@ -267,6 +300,9 @@
         </item>
         <item>
          <widget class="QDoubleSpinBox" name="azSpinBox">
+          <property name="decimals">
+           <number>0</number>
+          </property>
           <property name="minimum">
            <double>-1000.000000000000000</double>
           </property>
