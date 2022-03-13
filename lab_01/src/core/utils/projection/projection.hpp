@@ -11,6 +11,7 @@ struct projection
     line* data;
 };
 
+projection init_projection();
 bool is_valid(IN const projection& projection);
 
 int allocate_projection(OUT projection& projection, IN size_t size);

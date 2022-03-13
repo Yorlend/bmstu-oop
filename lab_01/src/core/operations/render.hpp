@@ -7,4 +7,4 @@ struct render_params
     projection& proj;
 };
 
-int render(VAR render_params& params, IN const model& model);
+int render(VAR render_params& params, VAR projection& proj, IN const model& model);

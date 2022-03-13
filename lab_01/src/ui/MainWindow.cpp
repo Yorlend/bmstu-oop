@@ -9,7 +9,7 @@
 
 
 MainWindow::MainWindow(QWidget *parent) :
-        QMainWindow(parent), ui(new Ui::main_window), proj({}), canvas(new Canvas())
+        QMainWindow(parent), ui(new Ui::main_window), canvas(new Canvas())
 {
     ui->setupUi(this);
 
@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    perform_operation({EXIT, {"exit"}});
 }
 
 void MainWindow::load()
@@ -41,6 +42,7 @@ void MainWindow::load()
 
 void MainWindow::render()
 {
+    projection proj{};
     op_params params{.op = RENDER, .rendering = (render_params) {proj}};
     int status = perform_operation(params);
 

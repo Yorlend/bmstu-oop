@@ -2,9 +2,11 @@
 
 #include "core/utils/error_codes.hpp"
 
-int load_model(OUT model& model, IN load_params params)
+int load_model(VAR model& model, IN load_params params)
 {
     int status = NO_ERRORS;
+
+    free_model(model);
 
     if (params.filename == nullptr)
         status = ARGS_ERROR;

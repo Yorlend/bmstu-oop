@@ -31,7 +31,6 @@ public slots:
 
 private:
     Ui::main_window *ui;
-    projection proj;
     Canvas* canvas;
 };
 

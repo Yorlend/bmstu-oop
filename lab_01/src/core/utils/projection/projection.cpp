@@ -3,6 +3,17 @@
 #include "projection.hpp"
 #include "core/utils/error_codes.hpp"
 
+
+projection init_projection()
+{
+    projection result{};
+
+    result.data = nullptr;
+    result.size = 0;
+
+    return result;
+}
+
 bool is_valid(IN const projection& projection)
 {
     return projection.data != nullptr && projection.size != 0;

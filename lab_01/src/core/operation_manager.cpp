@@ -5,6 +5,7 @@
 int perform_operation(op_params parameters)
 {
     static model model = init_model();
+    static projection projection = init_projection();
     int status = NO_ERRORS;
 
     switch (parameters.op)
@@ -13,7 +14,7 @@ int perform_operation(op_params parameters)
             status = load_model(model, parameters.loading);
             break;
         case RENDER:
-            status = render(parameters.rendering, model);
+            status = render(parameters.rendering, projection, model);
             break;
         case MOVE:
             status = move(model, parameters.moving);
@@ -25,6 +26,7 @@ int perform_operation(op_params parameters)
             status = resize(model, parameters.resizing);
             break;
         case EXIT:
+            exit(model, projection);
             break;
     }
 

@@ -447,16 +447,8 @@
      <string>File</string>
     </property>
     <addaction name="actionLoad"/>
-    <addaction name="actionReset"/>
-    <addaction name="actionClear"/>
-   </widget>
-   <widget class="QMenu" name="menuInfo">
-    <property name="title">
-     <string>Info</string>
-    </property>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuInfo"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionLoad">

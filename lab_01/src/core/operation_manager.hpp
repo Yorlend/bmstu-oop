@@ -6,6 +6,7 @@
 #include "operations/move.hpp"
 #include "operations/resize.hpp"
 #include "operations/rotate.hpp"
+#include "operations/exit.hpp"
 
 enum operation
 {
