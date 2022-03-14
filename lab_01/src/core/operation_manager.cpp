@@ -28,6 +28,9 @@ int perform_operation(op_params parameters)
         case EXIT:
             exit(model, projection);
             break;
+        default:
+            status = UNKNOWN_OPERATION;
+            break;
     }
 
     return status;
