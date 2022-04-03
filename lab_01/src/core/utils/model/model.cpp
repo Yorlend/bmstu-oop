@@ -40,7 +40,7 @@ int read_model(OUT model& model, IN FILE* file)
         status = read_edges(model.edges, file);
 
     if (status != NO_ERRORS)
-        free_model(model);
+        free_vertices(model.vertices);
 
     return status;
 }

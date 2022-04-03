@@ -1,5 +1,6 @@
 #include "vertex.hpp"
 #include "core/utils/error_codes.hpp"
+#include "core/utils/file_utils.hpp"
 #include <cstdlib>
 #include <cstring>
 
@@ -78,22 +79,23 @@ int read_vertex(OUT vertex& vert, IN FILE* file)
 
 int read_vertices(OUT vertex_array& verts, IN FILE* file)
 {
-    int status = NO_ERRORS;
+    if (file == nullptr)
+        return FILE_ERROR;
+
     size_t verts_quantity = 0;
 
-    if (file == nullptr)
-        status = FILE_ERROR;
-    else if (fscanf(file, "%zu", &verts_quantity) != 1)
-        status = LOAD_ERROR;
+    int status = read_quantity(verts_quantity, file);
 
-    if (status == NO_ERRORS)
+    if (status == NO_ERRORS && verts_quantity > 0)
+    {
         status = allocate_vertices(verts, verts_quantity);
 
-    for (size_t i = 0; i < verts_quantity && status == NO_ERRORS; i++)
-        status = read_vertex(verts.data[i], file);
+        for (size_t i = 0; status == NO_ERRORS && i < verts_quantity; i++)
+            status = read_vertex(verts.data[i], file);
 
-    if (status != NO_ERRORS)
-        free_vertices(verts);
+        if (status != NO_ERRORS)
+            free_vertices(verts);
+    }
 
     return status;
 }

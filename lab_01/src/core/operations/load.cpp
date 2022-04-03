@@ -4,26 +4,25 @@
 
 int load_model(VAR model& mod, IN load_params params)
 {
+    if (params.filename == nullptr)
+        return ARGS_ERROR;
+
     int status = NO_ERRORS;
 
-    model tmp_mod{};
-
-    if (params.filename == nullptr)
-        status = ARGS_ERROR;
-    else
+    FILE* file = fopen(params.filename, "r");
+    if (file != nullptr)
     {
-        FILE* file = fopen(params.filename, "r");
+        model tmp_mod{};
 
         status = read_model(tmp_mod, file);
 
-        if (file != nullptr)
-            fclose(file);
-    }
+        fclose(file);
 
-    if (status == NO_ERRORS)
-    {
-        free_model(mod);
-        mod = tmp_mod;
+        if (status == NO_ERRORS)
+        {
+            free_model(mod);
+            mod = tmp_mod;
+        }
     }
 
     return status;

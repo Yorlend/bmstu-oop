@@ -45,7 +45,7 @@ int resize_vertices(VAR vertex_array& verts, resize_params params)
     return status;
 }
 
-int resize(VAR model& mod, resize_params params)
+int scale(VAR model& mod, resize_params params)
 {
     model temp_model{};
 

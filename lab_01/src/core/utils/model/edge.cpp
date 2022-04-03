@@ -2,6 +2,7 @@
 #include <cstring>
 #include "edge.hpp"
 #include "core/utils/error_codes.hpp"
+#include "core/utils/file_utils.hpp"
 
 edge_array init_edges()
 {
@@ -78,22 +79,22 @@ int read_edge(OUT edge& edge, IN FILE* file)
 
 int read_edges(OUT edge_array& edges, IN FILE* file)
 {
-    int status = NO_ERRORS;
-    size_t edges_quantity = 0;
-
     if (file == nullptr)
-        status = FILE_ERROR;
-    else if (fscanf(file, "%zu", &edges_quantity) != 1)
-        status = LOAD_ERROR;
+        return FILE_ERROR;
+
+    size_t edges_quantity = 0;
+    int status = read_quantity(edges_quantity, file);
 
     if (status == NO_ERRORS)
+    {
         status = allocate_edges(edges, edges_quantity);
 
-    for (size_t i = 0; i < edges_quantity && status == NO_ERRORS; i++)
-        status = read_edge(edges.data[i], file);
+        for (size_t i = 0; status == NO_ERRORS && i < edges_quantity; i++)
+            status = read_edge(edges.data[i], file);
 
-    if (status != NO_ERRORS)
-        free_edges(edges);
+        if (status != NO_ERRORS)
+            free_edges(edges);
+    }
 
     return status;
 }

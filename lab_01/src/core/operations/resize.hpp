@@ -18,4 +18,4 @@ struct resize_params
 void resize_vertex(VAR vertex& vert, resize_params params);
 int resize_vertices(VAR vertex_array& verts, resize_params params);
 
-int resize(VAR model& mod, resize_params params);
+int scale(VAR model& mod, resize_params params);

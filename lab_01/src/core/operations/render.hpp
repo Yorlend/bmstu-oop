@@ -1,10 +1,16 @@
 #pragma once
 
-#include "core/utils/projection/projection.hpp"
+#include <QPainter>
+#include "core/utils/var_types.hpp"
+#include "core/utils/model/model.hpp"
 
 struct render_params
 {
-    projection& proj;
+    int width;
+    int height;
+    QPainter* painter;
 };
 
-int render(VAR render_params& params, VAR projection& proj, IN const model& model);
+bool is_valid(IN const render_params& params);
+
+int render(const model &model, const render_params &params);

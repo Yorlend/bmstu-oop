@@ -23,7 +23,8 @@ add_executable(lab_01 ${PROJ_FILES}
         src/core/utils/projection/projection.cpp
         src/ui/Canvas.hpp
         src/ui/Canvas.cpp
-        )
+        src/core/utils/file_utils.cpp
+        src/core/utils/file_utils.hpp)
 
 include_directories(src)
 

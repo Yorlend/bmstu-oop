@@ -6,7 +6,7 @@
 #include "operations/move.hpp"
 #include "operations/resize.hpp"
 #include "operations/rotate.hpp"
-#include "operations/exit.hpp"
+#include "operations/cleanup.hpp"
 
 enum operation
 {
@@ -31,4 +31,4 @@ struct op_params
     };
 };
 
-int perform_operation(VAR op_params parameters);
+int perform_operation(IN const op_params& parameters);

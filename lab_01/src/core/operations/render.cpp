@@ -1,17 +1,55 @@
 
 #include "render.hpp"
 #include "core/utils/error_codes.hpp"
+#include "core/utils/projection/projection.hpp"
 
-int render(VAR render_params& params, VAR projection& proj,  IN const model& model)
+bool is_valid(IN const render_params& params)
 {
-    projection temp_projection{};
-    int status = project(temp_projection, model);
+    return params.painter != nullptr && params.width > 0 && params.height > 0;
+}
+
+static void draw_line(IN QPainter& painter, IN const line& line)
+{
+    point p1 = line.start;
+    point p2 = line.end;
+
+    painter.drawLine(p1.x, p1.y, p2.x, p2.y);
+}
+
+static void translate(QPainter& painter, int dx, int dy)
+{
+    painter.translate(dx, dy);
+}
+
+static int paint_projection(IN const render_params& params, IN const projection& proj)
+{
+    if (!is_valid(params) || !is_valid(proj))
+        return ARGS_ERROR;
+
+    QPainter& painter = *params.painter;
+    int width = params.width;
+    int height = params.height;
+
+    translate(painter, width / 2, height / 2);
+
+    for (size_t i = 0; i < proj.size; i++)
+        draw_line(painter, proj.data[i]);
+
+    return NO_ERRORS;
+}
+
+int render(const model &model, const render_params &params)
+{
+    if (!is_valid(params) || !is_valid(model))
+        return ARGS_ERROR;
+
+    projection proj{};
+    int status = project(proj, model);
 
     if (status == NO_ERRORS)
     {
+        status = paint_projection(params, proj);
         free_projection(proj);
-        proj = temp_projection;
-        params.proj = proj;
     }
 
     return status;

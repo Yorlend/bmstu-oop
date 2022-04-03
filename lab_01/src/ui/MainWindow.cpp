@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-    perform_operation({EXIT, {"exit"}});
+    perform_operation({EXIT, {"cleanup"}});
 }
 
 void MainWindow::load()
@@ -42,30 +42,16 @@ void MainWindow::load()
 
 void MainWindow::render()
 {
-    projection proj{};
-    op_params params{.op = RENDER, .rendering = (render_params) {proj}};
+    int width = canvas->width();
+    int height = canvas->height();
+    QPainter painter(&canvas->getRenderBuffer());
+    painter.fillRect(0, 0, width, height, QColor(255, 255, 255));
+
+    op_params params{.op = RENDER, .rendering = (render_params) {width, height, &painter}};
     int status = perform_operation(params);
 
     if (status == NO_ERRORS)
-    {
-        int width = canvas->width();
-        int height = canvas->height();
-        QPainter painter(&canvas->getRenderBuffer());
-
-        painter.fillRect(0, 0, width, height, QColor(255, 255, 255));
-
-        for (size_t i = 0; i < proj.size; i++)
-        {
-            int x1 = proj.data[i].start.x;
-            int y1 = proj.data[i].start.y;
-            int x2 = proj.data[i].end.x;
-            int y2 = proj.data[i].end.y;
-
-            painter.drawLine(x1 + width / 2, y1 + height / 2, x2 + width / 2, y2 + height / 2);
-        }
-
         canvas->repaint();
-    }
 
     qDebug() << "render status: " << status;
 }
@@ -125,5 +111,5 @@ void MainWindow::resize()
     int status = perform_operation(params);
     render();
 
-    qDebug() << "resize status: " << status;
+    qDebug() << "scale status: " << status;
 }
