@@ -4,7 +4,7 @@
 #include "operations/load.hpp"
 #include "operations/render.hpp"
 #include "operations/move.hpp"
-#include "operations/resize.hpp"
+#include "operations/scale.hpp"
 #include "operations/rotate.hpp"
 #include "operations/cleanup.hpp"
 

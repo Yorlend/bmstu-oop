@@ -38,19 +38,17 @@ bool is_valid(IN const vertex_array& vertices)
     return vertices.data != nullptr && vertices.size != 0;
 }
 
-int allocate_vertices(OUT vertex_array& verts, IN size_t size)
+int allocate_vertices(OUT vertex*& verts, IN size_t size)
 {
     int status = NO_ERRORS;
     if (size == 0)
         status = ARGS_ERROR;
     else
     {
-        verts.data = (vertex*) calloc(size, sizeof(vertex));
+        verts = (vertex*) calloc(size, sizeof(vertex));
 
-        if (verts.data == nullptr)
+        if (verts == nullptr)
             status = MEMORY_ERROR;
-        else
-            verts.size = size;
     }
 
     return status;
@@ -63,6 +61,15 @@ void free_vertices(VAR vertex_array& verts)
         free(verts.data);
         verts.size = 0;
         verts.data = nullptr;
+    }
+}
+
+void free_vertices(VAR vertex*& verts)
+{
+    if (verts != nullptr)
+    {
+        free(verts);
+        verts = nullptr;
     }
 }
 
@@ -84,17 +91,17 @@ int read_vertices(OUT vertex_array& verts, IN FILE* file)
 
     size_t verts_quantity = 0;
 
-    int status = read_quantity(verts_quantity, file);
+    int status = read_quantity(verts.size, file);
 
-    if (status == NO_ERRORS && verts_quantity > 0)
+    if (status == NO_ERRORS)
     {
-        status = allocate_vertices(verts, verts_quantity);
+        status = allocate_vertices(verts.data, verts.size);
 
-        for (size_t i = 0; status == NO_ERRORS && i < verts_quantity; i++)
+        for (size_t i = 0; status == NO_ERRORS && i < verts.size; i++)
             status = read_vertex(verts.data[i], file);
 
         if (status != NO_ERRORS)
-            free_vertices(verts);
+            free_vertices(verts.data);
     }
 
     return status;

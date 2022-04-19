@@ -36,11 +36,12 @@ int read_model(OUT model& model, IN FILE* file)
 {
     int status = read_vertices(model.vertices, file);
 
-    if (status == NO_ERRORS)
+    if (status == NO_ERRORS) {
         status = read_edges(model.edges, file);
 
-    if (status != NO_ERRORS)
-        free_vertices(model.vertices);
+        if (status != NO_ERRORS)
+            free_vertices(model.vertices);
+    }
 
     return status;
 }
@@ -49,6 +50,11 @@ void free_model(VAR model& model)
 {
     free_vertices(model.vertices);
     free_edges(model.edges);
+}
+
+void free_model(VAR vertex_array& verts)
+{
+    free_vertices(verts);
 }
 
 int get_edge_size(OUT size_t& size, IN const model& model)

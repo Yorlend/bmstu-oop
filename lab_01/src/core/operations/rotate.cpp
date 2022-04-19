@@ -84,29 +84,27 @@ static move_params move_from_center(IN const rotate_params& params)
 
 int rotate(VAR model& mod, IN rotate_params params)
 {
-    model temp_model{};
-
-    int status = NO_ERRORS;
     if (!is_valid(mod))
-        status = ARGS_ERROR;
-    else
-        status = copy(temp_model, mod);
+        return ARGS_ERROR;
+
+    vertex_array verts{};
+    int status = copy(verts, mod.vertices);
 
     if (status == NO_ERRORS)
-        status = move(temp_model, move_to_center(params));
+        status = move(verts, move_to_center(params));
 
     if (status == NO_ERRORS)
-        status = rotate_vertices(temp_model.vertices, params);
+        status = rotate_vertices(verts, params);
 
     if (status == NO_ERRORS)
-        status = move(temp_model, move_from_center(params));
+        status = move(verts, move_from_center(params));
 
     if (status != NO_ERRORS)
-        free_model(temp_model);
+        free_model(verts);
     else
     {
-        free_model(mod);
-        mod = temp_model;
+        free_model(mod.vertices);
+        mod.vertices = verts;
     }
 
     return status;

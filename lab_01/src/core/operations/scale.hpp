@@ -15,7 +15,7 @@ struct resize_params
     double kz;
 };
 
-void resize_vertex(VAR vertex& vert, resize_params params);
-int resize_vertices(VAR vertex_array& verts, resize_params params);
+void scale_vertex(VAR vertex& vert, resize_params params);
+int scale_vertices(VAR vertex_array& verts, resize_params params);
 
 int scale(VAR model& mod, resize_params params);

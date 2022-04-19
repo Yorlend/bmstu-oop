@@ -16,6 +16,7 @@ bool is_valid(IN const model& model);
 
 int read_model(OUT model& model, IN FILE* file);
 void free_model(VAR model& model);
+void free_model(VAR vertex_array& verts);
 
 int get_edge_size(OUT size_t& size, IN const model& model);
 

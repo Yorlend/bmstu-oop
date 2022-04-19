@@ -21,19 +21,28 @@ static void translate(QPainter& painter, int dx, int dy)
     painter.translate(dx, dy);
 }
 
+static int get_width(IN const render_params& params)
+{
+    return params.width;
+}
+
+static int get_height(IN const render_params& params)
+{
+    return params.height;
+}
+
 static int paint_projection(IN const render_params& params, IN const projection& proj)
 {
     if (!is_valid(params) || !is_valid(proj))
         return ARGS_ERROR;
 
-    QPainter& painter = *params.painter;
-    int width = params.width;
-    int height = params.height;
+    int width = get_height(params);
+    int height = get_width(params);
 
-    translate(painter, width / 2, height / 2);
+    translate(*params.painter, width / 2, height / 2);
 
     for (size_t i = 0; i < proj.size; i++)
-        draw_line(painter, proj.data[i]);
+        draw_line(*params.painter, proj.data[i]);
 
     return NO_ERRORS;
 }

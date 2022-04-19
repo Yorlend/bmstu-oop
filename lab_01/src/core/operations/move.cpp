@@ -23,6 +23,15 @@ int move_vertices(VAR vertex_array& verts, IN move_params params)
     return status;
 }
 
+int move(VAR vertex_array& verts, IN move_params params)
+{
+    int status = ARGS_ERROR;
+    if (is_valid(verts))
+        status = move_vertices(verts, params);
+
+    return status;
+}
+
 int move(VAR model& model, IN move_params params)
 {
     int status = ARGS_ERROR;

@@ -13,10 +13,12 @@ int load_model(VAR model& mod, IN load_params params)
     if (file != nullptr)
     {
         model tmp_mod{};
-
         status = read_model(tmp_mod, file);
-
         fclose(file);
+
+        status = !is_valid(tmp_mod);
+        if(status != NO_ERRORS)
+            free_model(tmp_mod);
 
         if (status == NO_ERRORS)
         {
