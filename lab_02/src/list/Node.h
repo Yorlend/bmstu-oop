@@ -9,7 +9,6 @@ public:
     explicit Node(const T& value);
     explicit Node(T&& value) noexcept;
 
-
     T& getData() noexcept;
 
     void setData(T&& value) noexcept;

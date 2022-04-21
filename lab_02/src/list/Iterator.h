@@ -13,18 +13,15 @@ template <typename T>
 class Iterator : public std::iterator<std::forward_iterator_tag, T> 
 {
 public:
+    Iterator() = default;
     Iterator(const Iterator& iter) = default;
 
-    Iterator& operator++();
-
-    typename Iterator::reference operator*() const;
-
-    bool operator!=(Iterator const& other) const;
-
+    T* operator->();
+    T& operator*();
     operator bool();
 
-    T& operator*();
-    T* operator->();
+    Iterator& operator++();
+    bool operator!=(Iterator const& other) const;
 
 private:
     explicit Iterator(const std::shared_ptr<Node<T>>& initNode);

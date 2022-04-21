@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Iterator.h"
+#include "ConstIterator.h"
 #include "Node.h"
 #include "exceptions/InvalidIteratorStateException.h"
 
 template <typename T>
-Iterator<T>::Iterator(const std::shared_ptr<Node<T>>& initNode) : node(initNode) {}
+ConstIterator<T>::ConstIterator(const std::shared_ptr<Node<T>>& initNode) : node(initNode) {}
 
 template <typename T>
-T* Iterator<T>::operator->()
+const T* ConstIterator<T>::operator->()
 {
     if (node.expired())
         throw InvalidIteratorStateException(__FILE__, __LINE__);
@@ -16,7 +16,7 @@ T* Iterator<T>::operator->()
 }
 
 template <typename T>
-T& Iterator<T>::operator*()
+const T& ConstIterator<T>::operator*()
 {
     if (node.expired())
         throw InvalidIteratorStateException(__FILE__, __LINE__);
@@ -24,13 +24,13 @@ T& Iterator<T>::operator*()
 }
 
 template <typename T>
-Iterator<T>::operator bool()
+ConstIterator<T>::operator bool()
 {
     return node != nullptr;
 }
 
 template <typename T>
-Iterator<T>& Iterator<T>::operator++()
+ConstIterator<T>& ConstIterator<T>::operator++()
 {
     if (node.expired())
         throw InvalidIteratorStateException(__FILE__, __LINE__);
@@ -39,7 +39,7 @@ Iterator<T>& Iterator<T>::operator++()
 }
 
 template <typename T>
-bool Iterator<T>::operator!=(const Iterator<T>& other) const
+bool ConstIterator<T>::operator!=(const ConstIterator<T>& other) const
 {
     return node.lock() != other.node.lock();
 }
