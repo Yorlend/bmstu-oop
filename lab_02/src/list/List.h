@@ -5,17 +5,17 @@
 #include "Node.h"
 
 template <typename T>
-class Iterator;
+class ListIterator;
 
 template <typename T>
-class ConstIterator;
+class ConstListIterator;
 
 template <typename T>
 class List : public BaseList
 {
 public:
-    using iterator = Iterator<T>;
-    using const_iterator = ConstIterator<T>;
+    using iterator = ListIterator<T>;
+    using const_iterator = ConstListIterator<T>;
 
     List() = default;
 
@@ -89,6 +89,8 @@ public:
     inline const_iterator end() const noexcept;
 
 private:
+    std::shared_ptr<Node<T>> makeNode(const T& value) const;
+
     std::shared_ptr<Node<T>> head;
     std::shared_ptr<Node<T>> tail;
 };

@@ -1,14 +1,14 @@
 #pragma once
 
-#include "ConstIterator.h"
+#include "ConstListIterator.h"
 #include "Node.h"
 #include "exceptions/InvalidIteratorStateException.h"
 
 template <typename T>
-ConstIterator<T>::ConstIterator(const std::shared_ptr<Node<T>>& initNode) : node(initNode) {}
+ConstListIterator<T>::ConstListIterator(const std::shared_ptr<Node<T>>& initNode) : node(initNode) {}
 
 template <typename T>
-const T* ConstIterator<T>::operator->()
+const T* ConstListIterator<T>::operator->()
 {
     if (node.expired())
         throw InvalidIteratorStateException(__FILE__, __LINE__);
@@ -16,7 +16,7 @@ const T* ConstIterator<T>::operator->()
 }
 
 template <typename T>
-const T& ConstIterator<T>::operator*()
+const T& ConstListIterator<T>::operator*()
 {
     if (node.expired())
         throw InvalidIteratorStateException(__FILE__, __LINE__);
@@ -24,13 +24,13 @@ const T& ConstIterator<T>::operator*()
 }
 
 template <typename T>
-ConstIterator<T>::operator bool()
+ConstListIterator<T>::operator bool()
 {
     return node != nullptr;
 }
 
 template <typename T>
-ConstIterator<T>& ConstIterator<T>::operator++()
+ConstListIterator<T>& ConstListIterator<T>::operator++()
 {
     if (node.expired())
         throw InvalidIteratorStateException(__FILE__, __LINE__);
@@ -39,7 +39,7 @@ ConstIterator<T>& ConstIterator<T>::operator++()
 }
 
 template <typename T>
-bool ConstIterator<T>::operator!=(const ConstIterator<T>& other) const
+bool ConstListIterator<T>::operator!=(const ConstListIterator<T>& other) const
 {
     return node.lock() != other.node.lock();
 }

@@ -1,11 +1,12 @@
 #pragma once
 
 #include "List.h"
-#include "Iterator.h"
-#include "ConstIterator.h"
+#include "ListIterator.h"
+#include "ConstListIterator.h"
 #include "exceptions/OutOfBoundsException.h"
 #include "exceptions/EmptyListException.h"
 #include "exceptions/InvalidCountException.h"
+#include "exceptions/MemoryException.h"
 
 template <typename T>
 List<T>::List(const List& list)
@@ -55,7 +56,7 @@ List<T>& List<T>::operator=(List&& list) noexcept
 template <typename T>
 void List<T>::insertHead(const T& value)
 {
-    auto node = std::make_shared<Node<T>>(value);
+    auto node = makeNode(value);
     node->setNext(head);
 
     if (!head)
@@ -78,7 +79,7 @@ void List<T>::insertHead(const List& list)
 template <typename T>
 void List<T>::insertTail(const T& value)
 {
-    auto node = std::make_shared<Node<T>>(value);
+    auto node = makeNode(value);
     
     if (tail)
         tail->setNext(node);
@@ -114,7 +115,7 @@ void List<T>::insert(const T& value, size_t position)
     if (position > size())
         throw OutOfBoundsException(__FILE__, __LINE__);
 
-    auto newNode = std::make_shared<Node<T>>(value);
+    auto newNode = makeNode(value);
 
     if (position == 0)
     {
@@ -494,6 +495,19 @@ template <typename T>
 typename List<T>::const_iterator List<T>::end() const noexcept
 {
     return const_iterator(nullptr);
+}
+
+template<typename T>
+std::shared_ptr<Node<T>> List<T>::makeNode(const T &value) const
+{
+    try
+    {
+        return std::make_shared<Node<T>>(value);
+    }
+    catch (const std::bad_alloc& exception)
+    {
+        throw MemoryException(__FILE__, __LINE__);
+    }
 }
 
 template <typename T>
