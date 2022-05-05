@@ -13,8 +13,16 @@ int main()
     std::cout << dblLst << std::endl;
 
     int arr[] = {5, 9, 2, 11, 55};
-
     List<int> fromArray(arr, 5);
+
+    std::cout << fromArray << std::endl;
+
+    {
+        auto iter = fromArray.begin();
+        std::advance(iter, 3);
+
+        fromArray.remove(iter);
+    }
 
     std::cout << "From array: " << fromArray << std::endl;
 

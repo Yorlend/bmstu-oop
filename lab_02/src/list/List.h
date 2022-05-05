@@ -28,7 +28,26 @@ public:
 
     List& operator=(const List& list);
     List& operator=(List&& list) noexcept;
-    List& operator=(const std::initializer_list<T>& init); // ??? Надо? Тассов вроде говорил
+
+    T* toArray();
+
+    size_t size() const noexcept override;
+
+    bool isEmpty() const noexcept override;
+    void clear() noexcept override;
+
+    void pushFront(const T& value);
+    void pushFront(const List& list);
+    void pushBack(const T& value);
+    void pushBack(const List& list);
+
+    void insert(const const_iterator& iter, const T& value);
+
+    List operator+(const T& value) const;
+    List operator+(const List& list) const;
+    List& operator+=(const T& value);
+    List& operator+=(const List& list);
+    List& operator+=(const std::initializer_list<T>& init);
 
     T extractHead();
     List extractHead(size_t count);
@@ -42,30 +61,10 @@ public:
     T& getTail();
     const T& getTail() const;
 
-    T* toArray();
-
-    size_t size() const noexcept override;
-    bool isEmpty() const noexcept override;
-    void clear() noexcept override;
-
-    void pushFront(const T& value);
-    void pushFront(const List& list);
-
-    void pushBack(const T& value);
-    void pushBack(const List& list);
-
-    List operator+(const T& value) const;
-    List operator+(const List& list) const;
-
-    List& operator+=(const T& value);
-    List& operator+=(const List& list);
-    List& operator+=(const std::initializer_list<T>& init);
-
     void popFront();
     void popBack();
 
-//    void remove(size_t index);
-//    void remove(size_t index, size_t count);
+    void remove(const const_iterator& iter);
 
     List sublist(size_t index) const;
 

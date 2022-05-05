@@ -34,6 +34,7 @@ private:
     std::weak_ptr<Node<T>> node;
 
     friend class List<T>;
+    friend class ConstListIterator<T>;
 };
 
 #include "ListIterator.hpp"

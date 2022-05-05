@@ -119,42 +119,18 @@ void List<T>::pushBack(const List& list)
     }
 }
 
-//template <typename T>
-//void List<T>::insert(const T& value, size_t position)
-//{
-//    if (position > size())
-//        throw OutOfBoundsException(__FILE__, __LINE__);
-//
-//    auto newNode = makeNode(value);
-//
-//    if (position == 0)
-//    {
-//        newNode->setNext(head);
-//        head = newNode;
-//        if (tail == nullptr)
-//            tail = head;
-//    }
-//    else if (position == size())
-//    {
-//        tail->setNext(newNode);
-//        tail = newNode;
-//    }
-//    else
-//    {
-//        auto node = head;
-//        while (--position != 0)
-//            node = node->getNext();
-//        newNode->setNext(node->getNext());
-//        node->setNext(newNode);
-//    }
-//}
+template <typename T>
+void List<T>::insert(const const_iterator& iter, const T& value)
+{
+    if (!iter)
+        throw InvalidIteratorStateException(__FILE__, __LINE__);
 
-//template <typename T>
-//void List<T>::insert(const List& list, size_t position)
-//{
-//    for (const auto& val : list)
-//        insert(val, position++);
-//}
+    auto newNode = makeNode(value);
+    auto iterNode = iter.node.lock();
+
+    newNode->setNext(iterNode->getNext());
+    iterNode->setNext(newNode);
+}
 
 template <typename T>
 void List<T>::popFront()
@@ -166,18 +142,6 @@ void List<T>::popFront()
     if (!head)
         tail = nullptr;
 }
-
-//template <typename T>
-//void List<T>::removeHead(size_t count)
-//{
-//    if (count > size())
-//        throw InvalidCountException(__FILE__, __LINE__);
-//    else if (count == size())
-//        clear();
-//    else if (count != 0)
-//        while (count-- > 0)
-//            head = head->getNext();
-//}
 
 template <typename T>
 void List<T>::popBack()
@@ -198,67 +162,6 @@ void List<T>::popBack()
         tail = prev;
     }
 }
-
-//template <typename T>
-//void List<T>::removeTail(size_t count)
-//{
-//    if (count > size())
-//        throw InvalidCountException(__FILE__, __LINE__);
-//    else if (count == size())
-//        clear();
-//    else if (count != 0)
-//    {
-//        count = size() - count;
-//        auto prev = head;
-//        while (count-- != 0)
-//            prev = prev->getNext();
-//        prev->setNext(nullptr);
-//        tail = prev;
-//    }
-//}
-
-//template <typename T>
-//void List<T>::remove(size_t index)
-//{
-//    if (!head)
-//        throw EmptyListException(__FILE__, __LINE__);
-//    else if (index >= size())
-//        throw OutOfBoundsException(__FILE__, __LINE__);
-//    else if (index == 0)
-//        popFront();
-//    else if (index == size() - 1)
-//        popBack();
-//    else
-//    {
-//        auto node = head;
-//        while (--index != 0)
-//            node = node->getNext();
-//        node->setNext(node->getNext()->getNext());
-//    }
-//}
-
-//template <typename T>
-//void List<T>::remove(size_t index, size_t count)
-//{
-//    if (count == 0)
-//        return;
-//    else if (!head)
-//        throw EmptyListException(__FILE__, __LINE__);
-//    else if (index >= size())
-//        throw OutOfBoundsException(__FILE__, __LINE__);
-//    else if (index == 0)
-//        popFront(count);
-//    else if (index + count == size())
-//        popBack(count);
-//    else
-//    {
-//        auto node = head;
-//        while (--index > 0)
-//            node = node->getNext();
-//        while (count-- > 0)
-//            node->setNext(node->getNext()->getNext());
-//    }
-//}
 
 template <typename T>
 T List<T>::extractHead()
@@ -323,29 +226,6 @@ const T& List<T>::getTail() const
     return tail->getData();
 }
 
-//template <typename T>
-//T& List<T>::operator[](size_t index)
-//{
-//    if (index >= size())
-//        throw OutOfBoundsException(__FILE__, __LINE__);
-//
-//    auto node = head;
-//    while (index-- != 0)
-//        node = node->getNext();
-//    return node->getData();
-//}
-//
-//template <typename T>
-//const T& List<T>::operator[](size_t index) const
-//{
-//    if (index >= size())
-//        throw OutOfBoundsException(__FILE__, __LINE__);
-//
-//    auto node = head;
-//    while (index-- != 0)
-//        node = node->getNext();
-//    return node->getData();
-
 template<typename T>
 T* List<T>::toArray() {
     T* res = new T[size()];
@@ -358,6 +238,26 @@ T* List<T>::toArray() {
     }
 
     return res;
+}
+
+template<typename T>
+void List<T>::remove(const const_iterator& iter)
+{
+    if (!iter)
+        throw InvalidIteratorStateException(__FILE__, __LINE__);
+
+    auto iterNode = iter.node.lock();
+
+    if (iterNode == head)
+        head = head->getNext();
+    else
+    {
+        std::shared_ptr<Node<T>> curr = head;
+        while (curr->getNext() != iterNode)
+            curr = curr->getNext();
+
+        curr->setNext(iterNode->getNext());
+    }
 }
 
 template <typename T>

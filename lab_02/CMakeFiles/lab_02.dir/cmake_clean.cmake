@@ -1,18 +1,11 @@
 file(REMOVE_RECURSE
   "CMakeFiles/lab_02.dir/src/list/exceptions/BaseListException.cpp.o"
-  "CMakeFiles/lab_02.dir/src/list/exceptions/BaseListException.cpp.o.d"
   "CMakeFiles/lab_02.dir/src/list/exceptions/EmptyListException.cpp.o"
-  "CMakeFiles/lab_02.dir/src/list/exceptions/EmptyListException.cpp.o.d"
   "CMakeFiles/lab_02.dir/src/list/exceptions/InvalidCountException.cpp.o"
-  "CMakeFiles/lab_02.dir/src/list/exceptions/InvalidCountException.cpp.o.d"
   "CMakeFiles/lab_02.dir/src/list/exceptions/InvalidIteratorStateException.cpp.o"
-  "CMakeFiles/lab_02.dir/src/list/exceptions/InvalidIteratorStateException.cpp.o.d"
   "CMakeFiles/lab_02.dir/src/list/exceptions/MemoryException.cpp.o"
-  "CMakeFiles/lab_02.dir/src/list/exceptions/MemoryException.cpp.o.d"
   "CMakeFiles/lab_02.dir/src/list/exceptions/OutOfBoundsException.cpp.o"
-  "CMakeFiles/lab_02.dir/src/list/exceptions/OutOfBoundsException.cpp.o.d"
   "CMakeFiles/lab_02.dir/src/main.cpp.o"
-  "CMakeFiles/lab_02.dir/src/main.cpp.o.d"
   "lab_02"
   "lab_02.pdb"
 )

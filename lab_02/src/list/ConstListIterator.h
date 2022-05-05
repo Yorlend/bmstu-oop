@@ -10,15 +10,20 @@ template <typename T>
 class List;
 
 template <typename T>
+class ListIterator;
+
+template <typename T>
 class ConstListIterator : public std::iterator<std::forward_iterator_tag, T>
 {
 public:
     ConstListIterator() = default;
     ConstListIterator(const ConstListIterator& iter) = default;
+    ConstListIterator(const ListIterator<T>& iter);
 
     const T* operator->() const;
     const T& operator*() const;
-    operator bool();
+
+    operator bool() const;
 
     ConstListIterator& operator++();
     bool operator!=(const ConstListIterator& other) const;

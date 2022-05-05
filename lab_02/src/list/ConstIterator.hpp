@@ -16,6 +16,11 @@ const T* ConstListIterator<T>::operator->() const
 }
 
 template <typename T>
+ConstListIterator<T>::ConstListIterator(const ListIterator<T>& iter) : node(iter.node)
+{
+}
+
+template <typename T>
 const T& ConstListIterator<T>::operator*() const
 {
     if (node.expired())
@@ -24,9 +29,9 @@ const T& ConstListIterator<T>::operator*() const
 }
 
 template <typename T>
-ConstListIterator<T>::operator bool()
+ConstListIterator<T>::operator bool() const
 {
-    return node != nullptr;
+    return !node.expired();
 }
 
 template <typename T>

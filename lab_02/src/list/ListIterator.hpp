@@ -42,7 +42,7 @@ const T& ListIterator<T>::operator*() const
 template <typename T>
 ListIterator<T>::operator bool() const
 {
-    return node != nullptr;
+    return !node.expired();
 }
 
 template <typename T>
