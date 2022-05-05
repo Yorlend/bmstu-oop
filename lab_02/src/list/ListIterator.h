@@ -18,10 +18,15 @@ public:
 
     T* operator->();
     T& operator*();
-    operator bool();
+
+    const T* operator->() const;
+    const T& operator*() const;
+
+    operator bool() const;
 
     ListIterator& operator++();
-    bool operator!=(ListIterator const& other) const;
+    bool operator!=(const ListIterator& other) const;
+    bool operator==(const ListIterator& other) const;
 
 private:
     explicit ListIterator(const std::shared_ptr<Node<T>>& initNode);
@@ -31,4 +36,4 @@ private:
     friend class List<T>;
 };
 
-#include "Iterator.hpp"
+#include "ListIterator.hpp"

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include "list/List.h"
 
 int main()
@@ -9,11 +10,38 @@ int main()
 
     std::vector<double> vect = {1, 2, 2, 5, 3, 6};
     List<double> dblLst(vect.begin(), vect.end());
-    dblLst[2] = 10.2;
     std::cout << dblLst << std::endl;
 
-    dblLst.remove(1, 2);
-    std::cout << dblLst << std::endl;
+    int arr[] = {5, 9, 2, 11, 55};
+
+    List<int> fromArray(arr, 5);
+
+    std::cout << "From array: " << fromArray << std::endl;
+
+    List<std::string> strLst;
+
+    strLst.pushBack("abc");
+    strLst.pushFront("aaa");
+
+    std::cout << strLst << std::endl;
+
+    try
+    {
+        for (size_t i = 0; i < 5; i++)
+            strLst.popBack();
+    }
+    catch(const EmptyListException& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+
+    List<double> randLst = {5.2, 1.2, 4.3, 9.5, 2.3, 4.6};
+
+    double* doubleArr = randLst.toArray();
+
+    for (size_t i = 0; i < randLst.size(); i++)
+            std::cout << doubleArr[i] << " ";
+    std::cout << std::endl;
 
     return 0;
 }

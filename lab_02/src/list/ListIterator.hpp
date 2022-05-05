@@ -12,7 +12,7 @@ T* ListIterator<T>::operator->()
 {
     if (node.expired())
         throw InvalidIteratorStateException(__FILE__, __LINE__);
-    return node.lock()->getData();
+    return &node.lock()->getData();
 }
 
 template <typename T>
@@ -24,7 +24,23 @@ T& ListIterator<T>::operator*()
 }
 
 template <typename T>
-ListIterator<T>::operator bool()
+const T* ListIterator<T>::operator->() const
+{
+    if (node.expired())
+        throw InvalidIteratorStateException(__FILE__, __LINE__);
+    return &node.lock()->getData();
+}
+
+template <typename T>
+const T& ListIterator<T>::operator*() const
+{
+    if (node.expired())
+        throw InvalidIteratorStateException(__FILE__, __LINE__);
+    return node.lock()->getData();
+}
+
+template <typename T>
+ListIterator<T>::operator bool() const
 {
     return node != nullptr;
 }
@@ -42,4 +58,10 @@ template <typename T>
 bool ListIterator<T>::operator!=(const ListIterator<T>& other) const
 {
     return node.lock() != other.node.lock();
+}
+
+template <typename T>
+bool ListIterator<T>::operator==(const ListIterator<T>& other) const
+{
+    return node.lock() == other.node.lock();
 }

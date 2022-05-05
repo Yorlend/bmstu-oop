@@ -24,27 +24,11 @@ public:
     List(std::initializer_list<T> init);
     template <typename Iter>
     List(Iter begin, Iter end);
+    List(T* array, size_t size);
 
     List& operator=(const List& list);
     List& operator=(List&& list) noexcept;
-
-    void insertHead(const T& value);
-    void insertHead(const List& list);
-
-    void insertTail(const T& value);
-    void insertTail(const List& list);
-
-    void insert(const T& value, size_t position);
-    void insert(const List& list, size_t position);
-
-    void removeHead();
-    void removeHead(size_t count);
-
-    void removeTail();
-    void removeTail(size_t count);
-
-    void remove(size_t index);
-    void remove(size_t index, size_t count);
+    List& operator=(const std::initializer_list<T>& init); // ??? Надо? Тассов вроде говорил
 
     T extractHead();
     List extractHead(size_t count);
@@ -58,35 +42,52 @@ public:
     T& getTail();
     const T& getTail() const;
 
-    List sublist(size_t index) const;
-    List sublist(size_t index, size_t count) const;
+    T* toArray();
 
-    List reverse() const;
+    size_t size() const noexcept override;
+    bool isEmpty() const noexcept override;
+    void clear() noexcept override;
 
-    bool contains(const T& value) const noexcept;
+    void pushFront(const T& value);
+    void pushFront(const List& list);
 
-    T& operator[](size_t index);
-    const T& operator[](size_t index) const;
+    void pushBack(const T& value);
+    void pushBack(const List& list);
 
     List operator+(const T& value) const;
     List operator+(const List& list) const;
 
     List& operator+=(const T& value);
     List& operator+=(const List& list);
+    List& operator+=(const std::initializer_list<T>& init);
 
+    void popFront();
+    void popBack();
+
+//    void remove(size_t index);
+//    void remove(size_t index, size_t count);
+
+    List sublist(size_t index) const;
+
+    List sublist(size_t index, size_t count) const;
+
+    List reverse() const;
+
+    bool contains(const T& value) const noexcept;
+//    T& operator[](size_t index);
+//
+//    const T& operator[](size_t index) const;
     bool operator==(const List& list) const noexcept;
+
     bool operator!=(const List& list) const noexcept;
-
-    size_t size() const noexcept override;
-    bool isEmpty() const noexcept override;
-
-    void clear() noexcept override;
 
     inline iterator begin() noexcept;
     inline const_iterator begin() const noexcept;
+    inline const_iterator cbegin() const noexcept;
     
     inline iterator end() noexcept;
     inline const_iterator end() const noexcept;
+    inline const_iterator cend() const noexcept;
 
 private:
     std::shared_ptr<Node<T>> makeNode(const T& value) const;

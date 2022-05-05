@@ -9,6 +9,6 @@ file(GLOB_RECURSE PROJ_FILES
         src/*.h
         )
 
-add_executable(lab_01 ${PROJ_FILES})
+add_executable(lab_02 ${PROJ_FILES})
 
 include_directories(src)

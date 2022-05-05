@@ -12,7 +12,7 @@ template <typename T>
 List<T>::List(const List& list)
 {
     for (auto value : list)
-        insertTail(value);
+        pushBack(value);
 }
 
 template <typename T>
@@ -25,7 +25,7 @@ template <typename T>
 List<T>::List(std::initializer_list<T> init)
 {
     for (auto value : init)
-        insertTail(value);
+        pushBack(value);
 }
 
 template <typename T>
@@ -33,7 +33,17 @@ template <typename Iter>
 List<T>::List(Iter begin, Iter end)
 {
     for (Iter it = begin; it != end; it++)
-        insertTail(*it);
+        pushBack(*it);
+}
+
+template<typename T>
+List<T>::List(T *array, size_t size)
+{
+    if (size < 1)
+        throw InvalidCountException(__FILE__, __LINE__);
+
+    for (size_t i = 0; i < size; i++)
+        pushBack(array[i]);
 }
 
 template <typename T>
@@ -41,7 +51,7 @@ List<T>& List<T>::operator=(const List& list)
 {
     clear();
     for (const auto& value : list)
-        insertTail(value);
+        pushBack(value);
     return *this;
 }
 
@@ -54,7 +64,7 @@ List<T>& List<T>::operator=(List&& list) noexcept
 }
 
 template <typename T>
-void List<T>::insertHead(const T& value)
+void List<T>::pushFront(const T& value)
 {
     auto node = makeNode(value);
     node->setNext(head);
@@ -66,7 +76,7 @@ void List<T>::insertHead(const T& value)
 }
 
 template <typename T>
-void List<T>::insertHead(const List& list)
+void List<T>::pushFront(const List& list)
 {
     if (!list.isEmpty())
     {
@@ -77,10 +87,10 @@ void List<T>::insertHead(const List& list)
 }
 
 template <typename T>
-void List<T>::insertTail(const T& value)
+void List<T>::pushBack(const T& value)
 {
     auto node = makeNode(value);
-    
+
     if (tail)
         tail->setNext(node);
     else
@@ -90,7 +100,7 @@ void List<T>::insertTail(const T& value)
 }
 
 template <typename T>
-void List<T>::insertTail(const List& list)
+void List<T>::pushBack(const List& list)
 {
     if (!list.isEmpty())
     {
@@ -109,45 +119,45 @@ void List<T>::insertTail(const List& list)
     }
 }
 
+//template <typename T>
+//void List<T>::insert(const T& value, size_t position)
+//{
+//    if (position > size())
+//        throw OutOfBoundsException(__FILE__, __LINE__);
+//
+//    auto newNode = makeNode(value);
+//
+//    if (position == 0)
+//    {
+//        newNode->setNext(head);
+//        head = newNode;
+//        if (tail == nullptr)
+//            tail = head;
+//    }
+//    else if (position == size())
+//    {
+//        tail->setNext(newNode);
+//        tail = newNode;
+//    }
+//    else
+//    {
+//        auto node = head;
+//        while (--position != 0)
+//            node = node->getNext();
+//        newNode->setNext(node->getNext());
+//        node->setNext(newNode);
+//    }
+//}
+
+//template <typename T>
+//void List<T>::insert(const List& list, size_t position)
+//{
+//    for (const auto& val : list)
+//        insert(val, position++);
+//}
+
 template <typename T>
-void List<T>::insert(const T& value, size_t position)
-{
-    if (position > size())
-        throw OutOfBoundsException(__FILE__, __LINE__);
-
-    auto newNode = makeNode(value);
-
-    if (position == 0)
-    {
-        newNode->setNext(head);
-        head = newNode;
-        if (tail == nullptr)
-            tail = head;
-    }
-    else if (position == size())
-    {
-        tail->setNext(newNode);
-        tail = newNode;
-    }
-    else
-    {
-        auto node = head;
-        while (--position != 0)
-            node = node->getNext();
-        newNode->setNext(node->getNext());
-        node->setNext(newNode);
-    }
-}
-
-template <typename T>
-void List<T>::insert(const List& list, size_t position)
-{
-    for (const auto& val : list)
-        insert(val, position++);
-}
-
-template <typename T>
-void List<T>::removeHead()
+void List<T>::popFront()
 {
     if (!head)
         throw EmptyListException(__FILE__, __LINE__);
@@ -157,20 +167,20 @@ void List<T>::removeHead()
         tail = nullptr;
 }
 
-template <typename T>
-void List<T>::removeHead(size_t count)
-{
-    if (count > size())
-        throw InvalidCountException(__FILE__, __LINE__);
-    else if (count == size())
-        clear();
-    else if (count != 0)
-        while (count-- > 0)
-            head = head->getNext();
-}
+//template <typename T>
+//void List<T>::removeHead(size_t count)
+//{
+//    if (count > size())
+//        throw InvalidCountException(__FILE__, __LINE__);
+//    else if (count == size())
+//        clear();
+//    else if (count != 0)
+//        while (count-- > 0)
+//            head = head->getNext();
+//}
 
 template <typename T>
-void List<T>::removeTail()
+void List<T>::popBack()
 {
     if (!tail)
         throw EmptyListException(__FILE__, __LINE__);
@@ -189,66 +199,66 @@ void List<T>::removeTail()
     }
 }
 
-template <typename T>
-void List<T>::removeTail(size_t count)
-{
-    if (count > size())
-        throw InvalidCountException(__FILE__, __LINE__);
-    else if (count == size())
-        clear();
-    else if (count != 0)
-    {
-        count = size() - count;
-        auto prev = head;
-        while (count-- != 0)
-            prev = prev->getNext();
-        prev->setNext(nullptr);
-        tail = prev;
-    }
-}
+//template <typename T>
+//void List<T>::removeTail(size_t count)
+//{
+//    if (count > size())
+//        throw InvalidCountException(__FILE__, __LINE__);
+//    else if (count == size())
+//        clear();
+//    else if (count != 0)
+//    {
+//        count = size() - count;
+//        auto prev = head;
+//        while (count-- != 0)
+//            prev = prev->getNext();
+//        prev->setNext(nullptr);
+//        tail = prev;
+//    }
+//}
 
-template <typename T>
-void List<T>::remove(size_t index)
-{
-    if (!head)
-        throw EmptyListException(__FILE__, __LINE__);
-    else if (index >= size())
-        throw OutOfBoundsException(__FILE__, __LINE__);
-    else if (index == 0)
-        removeHead();
-    else if (index == size() - 1)
-        removeTail();
-    else
-    {
-        auto node = head;
-        while (--index != 0)
-            node = node->getNext();
-        node->setNext(node->getNext()->getNext());
-    }
-}
+//template <typename T>
+//void List<T>::remove(size_t index)
+//{
+//    if (!head)
+//        throw EmptyListException(__FILE__, __LINE__);
+//    else if (index >= size())
+//        throw OutOfBoundsException(__FILE__, __LINE__);
+//    else if (index == 0)
+//        popFront();
+//    else if (index == size() - 1)
+//        popBack();
+//    else
+//    {
+//        auto node = head;
+//        while (--index != 0)
+//            node = node->getNext();
+//        node->setNext(node->getNext()->getNext());
+//    }
+//}
 
-template <typename T>
-void List<T>::remove(size_t index, size_t count)
-{
-    if (count == 0)
-        return;
-    else if (!head)
-        throw EmptyListException(__FILE__, __LINE__);
-    else if (index >= size())
-        throw OutOfBoundsException(__FILE__, __LINE__);
-    else if (index == 0)
-        removeHead(count);
-    else if (index + count == size())
-        removeTail(count);
-    else
-    {
-        auto node = head;
-        while (--index > 0)
-            node = node->getNext();
-        while (count-- > 0)
-            node->setNext(node->getNext()->getNext());
-    }
-}
+//template <typename T>
+//void List<T>::remove(size_t index, size_t count)
+//{
+//    if (count == 0)
+//        return;
+//    else if (!head)
+//        throw EmptyListException(__FILE__, __LINE__);
+//    else if (index >= size())
+//        throw OutOfBoundsException(__FILE__, __LINE__);
+//    else if (index == 0)
+//        popFront(count);
+//    else if (index + count == size())
+//        popBack(count);
+//    else
+//    {
+//        auto node = head;
+//        while (--index > 0)
+//            node = node->getNext();
+//        while (count-- > 0)
+//            node->setNext(node->getNext()->getNext());
+//    }
+//}
 
 template <typename T>
 T List<T>::extractHead()
@@ -313,6 +323,43 @@ const T& List<T>::getTail() const
     return tail->getData();
 }
 
+//template <typename T>
+//T& List<T>::operator[](size_t index)
+//{
+//    if (index >= size())
+//        throw OutOfBoundsException(__FILE__, __LINE__);
+//
+//    auto node = head;
+//    while (index-- != 0)
+//        node = node->getNext();
+//    return node->getData();
+//}
+//
+//template <typename T>
+//const T& List<T>::operator[](size_t index) const
+//{
+//    if (index >= size())
+//        throw OutOfBoundsException(__FILE__, __LINE__);
+//
+//    auto node = head;
+//    while (index-- != 0)
+//        node = node->getNext();
+//    return node->getData();
+
+template<typename T>
+T* List<T>::toArray() {
+    T* res = new T[size()];
+
+    size_t i = 0;
+    for (auto element : *this)
+    {
+        res[i] = element;
+        i++;
+    }
+
+    return res;
+}
+
 template <typename T>
 List<T> List<T>::sublist(size_t index) const
 {
@@ -326,7 +373,7 @@ List<T> List<T>::sublist(size_t index) const
     while (index-- > 0)
         node = node->getNext();
     for (; node != nullptr; node = node->getNext())
-        res.insertTail(node->getData());
+        res.pushBack(node->getData());
 
     return std::move(res);
 }
@@ -344,7 +391,7 @@ List<T> List<T>::sublist(size_t index, size_t count) const
     while (index-- > 0)
         node = node->getNext();
     for (; node != nullptr && count-- > 0; node = node->getNext())
-        res.insertTail(node->getData());
+        res.pushBack(node->getData());
 
     return std::move(res);
 }
@@ -355,7 +402,7 @@ List<T> List<T>::reverse() const
     List<T> res;
 
     for (auto node = head; node != nullptr; node = node->getNext())
-        res.insertHead(node->getData());
+        res.pushFront(node->getData());
 
     return res;
 }
@@ -369,35 +416,13 @@ bool List<T>::contains(const T& value) const noexcept
     return false;
 }
 
-template <typename T>
-T& List<T>::operator[](size_t index)
-{
-    if (index >= size())
-        throw OutOfBoundsException(__FILE__, __LINE__);
-
-    auto node = head;
-    while (index-- != 0)
-        node = node->getNext();
-    return node->getData();
-}
-
-template <typename T>
-const T& List<T>::operator[](size_t index) const
-{
-    if (index >= size())
-        throw OutOfBoundsException(__FILE__, __LINE__);
-
-    auto node = head;
-    while (index-- != 0)
-        node = node->getNext();
-    return node->getData();
-}
+//}
 
 template <typename T>
 List<T> List<T>::operator+(const T& value) const
 {
     List<T> copy = *this;
-    copy.insertTail(value);
+    copy.pushBack(value);
     return copy;
 }
 
@@ -405,21 +430,21 @@ template <typename T>
 List<T> List<T>::operator+(const List& list) const
 {
     List<T> copy = *this;
-    copy.insertTail(list);
+    copy.pushBack(list);
     return copy;
 }
 
 template <typename T>
 List<T>& List<T>::operator+=(const T& value)
 {
-    insertTail(value);
+    pushBack(value);
     return *this;
 }
 
 template <typename T>
 List<T>& List<T>::operator+=(const List& list)
 {
-    insertTail(list);
+    pushBack(list);
     return *this;
 }
 
@@ -490,13 +515,11 @@ typename List<T>::iterator List<T>::end() noexcept
 {
     return iterator(nullptr);
 }
-
 template <typename T>
 typename List<T>::const_iterator List<T>::end() const noexcept
 {
     return const_iterator(nullptr);
 }
-
 template<typename T>
 std::shared_ptr<Node<T>> List<T>::makeNode(const T &value) const
 {
@@ -514,7 +537,7 @@ template <typename T>
 List<T> operator+(const T& value, const List<T>& list)
 {
     List<T> copy(list);
-    copy.insertHead(value);
+    copy.pushFront(value);
     return std::move(copy);
 }
 

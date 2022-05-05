@@ -16,12 +16,13 @@ public:
     ConstListIterator() = default;
     ConstListIterator(const ConstListIterator& iter) = default;
 
-    const T* operator->();
-    const T& operator*();
+    const T* operator->() const;
+    const T& operator*() const;
     operator bool();
 
     ConstListIterator& operator++();
     bool operator!=(const ConstListIterator& other) const;
+    bool operator==(const ConstListIterator& other) const;
 
 private:
     explicit ConstListIterator(const std::shared_ptr<Node<T>>& initNode);

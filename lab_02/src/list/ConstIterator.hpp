@@ -8,7 +8,7 @@ template <typename T>
 ConstListIterator<T>::ConstListIterator(const std::shared_ptr<Node<T>>& initNode) : node(initNode) {}
 
 template <typename T>
-const T* ConstListIterator<T>::operator->()
+const T* ConstListIterator<T>::operator->() const
 {
     if (node.expired())
         throw InvalidIteratorStateException(__FILE__, __LINE__);
@@ -16,7 +16,7 @@ const T* ConstListIterator<T>::operator->()
 }
 
 template <typename T>
-const T& ConstListIterator<T>::operator*()
+const T& ConstListIterator<T>::operator*() const
 {
     if (node.expired())
         throw InvalidIteratorStateException(__FILE__, __LINE__);
@@ -42,4 +42,10 @@ template <typename T>
 bool ConstListIterator<T>::operator!=(const ConstListIterator<T>& other) const
 {
     return node.lock() != other.node.lock();
+}
+
+template <typename T>
+bool ConstListIterator<T>::operator==(const ConstListIterator& other) const
+{
+    return node.lock() == other.node.lock();
 }

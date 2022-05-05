@@ -17,7 +17,7 @@ BaseListException::BaseListException(const char* reason, const char* filename, u
              filename, line, reason);
 
     message = new char[msglen];
-    snprintf(nullptr, 0, format,
+    snprintf(message, msglen + 1, format,
              timeinfo->tm_mday,
              timeinfo->tm_mon + 1, timeinfo->tm_year + 1900,
              timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec,
