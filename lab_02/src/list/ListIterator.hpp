@@ -65,3 +65,11 @@ bool ListIterator<T>::operator==(const ListIterator<T>& other) const
 {
     return node.lock() == other.node.lock();
 }
+
+template <typename T>
+std::shared_ptr<Node<T>> ListIterator<T>::getNode() const
+{
+    if (node.expired())
+        throw InvalidIteratorStateException(__FILE__, __LINE__);
+    return node.lock();
+}

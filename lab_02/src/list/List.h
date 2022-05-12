@@ -21,33 +21,36 @@ public:
 
     explicit List(const List& list);
     List(List&& list) noexcept;
-    List(std::initializer_list<T> init);
+    List(const std::initializer_list<T>& init);
     template <typename Iter>
     List(Iter begin, Iter end);
     List(T* array, size_t size);
 
     List& operator=(const List& list);
     List& operator=(List&& list) noexcept;
+    List& operator=(const std::initializer_list<T>& init);
 
     T* toArray();
 
     size_t size() const noexcept override;
 
     bool isEmpty() const noexcept override;
+
     void clear() noexcept override;
 
     void pushFront(const T& value);
     void pushFront(const List& list);
+
     void pushBack(const T& value);
     void pushBack(const List& list);
 
+    void popFront();
+
+    void popBack();
+
     void insert(const const_iterator& iter, const T& value);
 
-    List operator+(const T& value) const;
-    List operator+(const List& list) const;
-    List& operator+=(const T& value);
-    List& operator+=(const List& list);
-    List& operator+=(const std::initializer_list<T>& init);
+    void remove(const const_iterator& iter);
 
     T extractHead();
     List extractHead(size_t count);
@@ -61,21 +64,20 @@ public:
     T& getTail();
     const T& getTail() const;
 
-    void popFront();
-    void popBack();
-
-    void remove(const const_iterator& iter);
-
     List sublist(size_t index) const;
-
     List sublist(size_t index, size_t count) const;
 
     List reverse() const;
 
     bool contains(const T& value) const noexcept;
-//    T& operator[](size_t index);
-//
-//    const T& operator[](size_t index) const;
+
+    List operator+(const T& value) const;
+    List operator+(const List& list) const;
+    
+    List& operator+=(const T& value);
+    List& operator+=(const List& list);
+    List& operator+=(const std::initializer_list<T>& init);
+
     bool operator==(const List& list) const noexcept;
 
     bool operator!=(const List& list) const noexcept;
@@ -90,6 +92,7 @@ public:
 
 private:
     std::shared_ptr<Node<T>> makeNode(const T& value) const;
+    std::shared_ptr<Node<T>> getPrevNode(std::shared_ptr<Node<T>> node) const;
 
     std::shared_ptr<Node<T>> head;
     std::shared_ptr<Node<T>> tail;

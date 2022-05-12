@@ -22,7 +22,7 @@ List<T>::List(List&& list) noexcept
 }
 
 template <typename T>
-List<T>::List(std::initializer_list<T> init)
+List<T>::List(const std::initializer_list<T>& init)
 {
     for (auto value : init)
         pushBack(value);
@@ -52,6 +52,7 @@ List<T>& List<T>::operator=(const List& list)
     clear();
     for (const auto& value : list)
         pushBack(value);
+
     return *this;
 }
 
@@ -60,6 +61,17 @@ List<T>& List<T>::operator=(List&& list) noexcept
 {
     std::swap(head, list.head);
     std::swap(tail, list.tail);
+
+    return *this;
+}
+
+template <typename T>
+List<T>& List<T>::operator=(const std::initializer_list<T>& init)
+{
+    clear();
+    for (auto value : init)
+        pushBack(value);
+
     return *this;
 }
 
@@ -123,13 +135,18 @@ template <typename T>
 void List<T>::insert(const const_iterator& iter, const T& value)
 {
     if (!iter)
-        throw InvalidIteratorStateException(__FILE__, __LINE__);
+        pushBack(value);
+    else if (iter == begin())
+        pushFront(value);
+    else
+    {
+        auto newNode = makeNode(value);
+        auto iterNode = iter.getNode();
+        auto prev = getPrevNode(iterNode);
 
-    auto newNode = makeNode(value);
-    auto iterNode = iter.node.lock();
-
-    newNode->setNext(iterNode->getNext());
-    iterNode->setNext(newNode);
+        prev->setNext(newNode);
+        newNode->setNext(iterNode);
+    }
 }
 
 template <typename T>
@@ -155,9 +172,7 @@ void List<T>::popBack()
     }
     else
     {
-        auto prev = head;
-        while (prev->getNext() != tail)
-            prev = prev->getNext();
+        auto prev = getPrevNode(tail);
         prev->setNext(nullptr);
         tail = prev;
     }
@@ -246,17 +261,14 @@ void List<T>::remove(const const_iterator& iter)
     if (!iter)
         throw InvalidIteratorStateException(__FILE__, __LINE__);
 
-    auto iterNode = iter.node.lock();
+    auto iterNode = iter.getNode();
 
     if (iterNode == head)
         head = head->getNext();
     else
     {
-        std::shared_ptr<Node<T>> curr = head;
-        while (curr->getNext() != iterNode)
-            curr = curr->getNext();
-
-        curr->setNext(iterNode->getNext());
+        auto prev = getPrevNode(iterNode);
+        prev->setNext(iterNode->getNext());
     }
 }
 
@@ -315,8 +327,6 @@ bool List<T>::contains(const T& value) const noexcept
             return true;
     return false;
 }
-
-//}
 
 template <typename T>
 List<T> List<T>::operator+(const T& value) const
@@ -431,6 +441,16 @@ std::shared_ptr<Node<T>> List<T>::makeNode(const T &value) const
     {
         throw MemoryException(__FILE__, __LINE__);
     }
+}
+
+template <typename T>
+std::shared_ptr<Node<T>> List<T>::getPrevNode(std::shared_ptr<Node<T>> node) const
+{
+    std::shared_ptr<Node<T>> res = head;
+    while (res && res->getNext() != node)
+        res = res->getNext();
+    
+    return res;
 }
 
 template <typename T>

@@ -31,6 +31,8 @@ public:
 private:
     explicit ListIterator(const std::shared_ptr<Node<T>>& initNode);
 
+    std::shared_ptr<Node<T>> getNode() const;
+
     std::weak_ptr<Node<T>> node;
 
     friend class List<T>;

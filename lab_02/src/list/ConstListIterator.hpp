@@ -54,3 +54,11 @@ bool ConstListIterator<T>::operator==(const ConstListIterator& other) const
 {
     return node.lock() == other.node.lock();
 }
+
+template <typename T>
+std::shared_ptr<Node<T>> ConstListIterator<T>::getNode() const
+{
+    if (node.expired())
+        throw InvalidIteratorStateException(__FILE__, __LINE__);
+    return node.lock();
+}

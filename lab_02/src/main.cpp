@@ -45,6 +45,9 @@ int main()
 
     List<double> randLst = {5.2, 1.2, 4.3, 9.5, 2.3, 4.6};
 
+    randLst.insert(randLst.begin(), 8.2);
+    randLst.insert(randLst.end(), 9.99);
+
     double* doubleArr = randLst.toArray();
 
     for (size_t i = 0; i < randLst.size(); i++)
