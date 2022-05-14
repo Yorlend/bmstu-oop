@@ -6,9 +6,6 @@
 class WireframeBuilder : public BaseObjectBuilder 
 {
 public:
-    WireframeBuilder() = default;
-    ~WireframeBuilder() = default;
-
     virtual void buildVerts(const Vector& vert) override;       
     virtual void buildEdges(const Edge& edge) override;
 
