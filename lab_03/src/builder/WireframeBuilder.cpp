@@ -1,6 +1,6 @@
 #include "WireframeBuilder.hpp"
 #include "object/Wireframe.hpp"
-#include "object/Adapter.hpp"
+// #include "object/Adapter.hpp"
 
 void WireframeBuilder::buildVerts(const Vector& vert)
 {
@@ -14,5 +14,6 @@ void WireframeBuilder::buildEdges(const Edge& edge)
 
 std::shared_ptr<BaseObject> WireframeBuilder::assemble() const
 {
-    return std::make_shared<Adapter<Wireframe>>(Wireframe(vertices, edges));
+    return nullptr;
+    // return std::make_shared<Adapter<Wireframe>>(Wireframe(vertices, edges));
 }

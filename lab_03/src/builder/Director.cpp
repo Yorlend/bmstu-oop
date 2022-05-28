@@ -5,5 +5,5 @@ Director::Director(std::unique_ptr<BaseObjectBuilder>&& objectBuilder) noexcept
 
 std::shared_ptr<BaseObject> Director::construct(std::unique_ptr<IObjectLoader> loader) const
 {
-    
+    return nullptr;
 }

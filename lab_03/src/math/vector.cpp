@@ -1,7 +1,6 @@
-#include "Vector.hpp"
-
 #include <stdexcept>
 #include <cmath>
+#include "vector.hpp"
 
 Vector::Vector(double xPos, double yPos, double zPos, double wDir) noexcept
     : x(xPos), y(yPos), z(zPos), w(wDir) {}

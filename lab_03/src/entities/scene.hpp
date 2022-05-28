@@ -1,6 +1,6 @@
 #pragma once
 
-class Facade
+class Scene
 {
 
 };

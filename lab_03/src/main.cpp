@@ -1,15 +1,12 @@
-#include <iostream>
+#include <QApplication>
+#include "ui/main_window.hpp"
 
-#include "object/BaseObject.hpp"
-#include "object/Vector.hpp"
-
-int main()
+int main(int argc, char *argv[])
 {
-    Vector vec = {1, 2, 3, 0};
+    QApplication app(argc, argv);
 
-    vec += {2, 3, 4};
+    MainWindow mainWindow;
+    mainWindow.show();
 
-    std::cout << vec << std::endl;
-
-    return 0;
+    return app.exec();
 }
