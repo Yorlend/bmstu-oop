@@ -3,12 +3,11 @@
 #include <initializer_list>
 #include <ostream>
 
-
 class Vector
 {
 public:
-    Vector(double xPos, double yPos, double zPos, double wDir = 0.0) noexcept;
-    Vector(const std::initializer_list<double>& init);
+    Vector(double xPos = 0.0, double yPos = 0.0, double zPos = 0.0, double wDir = 0.0) noexcept;
+    Vector(const std::initializer_list<double> &init);
 
     double getX() const;
     double getY() const;
@@ -21,20 +20,20 @@ public:
     void setW(double newW) noexcept;
 
     double length() const;
-    
+
     void normalize();
 
-    Vector operator+(const Vector& other) const;
-    Vector& operator+=(const Vector& other);
+    Vector operator+(const Vector &other) const;
+    Vector &operator+=(const Vector &other);
 
-    Vector operator-(const Vector& other) const;
-    Vector& operator-=(const Vector& other);
+    Vector operator-(const Vector &other) const;
+    Vector &operator-=(const Vector &other);
 
-    Vector operator*(const Vector& other) const;
-    Vector& operator*=(const Vector& other);
+    Vector operator*(const Vector &other) const;
+    Vector &operator*=(const Vector &other);
 
     Vector operator*(double mul) const;
-    Vector& operator*=(double mul);
+    Vector &operator*=(double mul);
 
     Vector operator~() const;
 
@@ -45,5 +44,5 @@ private:
     double w;
 };
 
-std::ostream& operator<<(std::ostream& stream, const Vector& vec);
-Vector operator*(double mul, const Vector& other);
+std::ostream &operator<<(std::ostream &stream, const Vector &vec);
+Vector operator*(double mul, const Vector &other);

@@ -1,11 +1,21 @@
 #pragma once
 
-class SceneManager
+#include <memory>
+#include <string>
+#include "basemanager.hpp"
+#include "datarepository.hpp"
+#include "directors/iobjectdirector.hpp"
+
+class Solution;
+
+class SceneManager : public BaseManager
 {
 public:
+    SceneManager(Solution& solution);
+
     void createNewScene();
-    void renderScene();
 
 private:
-    std::shared_ptr<Scene> scene;
+    std::shared_ptr<DataRepository> dataRepository;
+    std::shared_ptr<IObjectDirector> defaultCameraDirector;
 };

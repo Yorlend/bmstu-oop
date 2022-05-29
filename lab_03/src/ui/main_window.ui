@@ -14,24 +14,9 @@
    <string>lab3</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
-    <property name="spacing">
-     <number>0</number>
-    </property>
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="ViewportWidget" name="viewportWidget" native="true"/>
+     <widget class="QGraphicsView" name="viewport"/>
     </item>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -68,12 +53,6 @@
    <class>InspectorWidget</class>
    <extends>QWidget</extends>
    <header>ui/widgets/inspector/inspector_widget.hpp</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>ViewportWidget</class>
-   <extends>QWidget</extends>
-   <header>ui/widgets/viewport/viewport_widget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

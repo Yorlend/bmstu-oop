@@ -1,30 +1,44 @@
 #pragma once
 
 #include <list>
+#include <string>
 #include <memory>
+#include "math/transform.hpp"
+
+class IVisitor;
 
 class BaseObject
 {
 public:
     using Iterator = std::list<std::shared_ptr<BaseObject>>::iterator;
 
+    BaseObject(size_t id, const std::string &name = "BaseObject", const Transform &transform = Transform());
     virtual ~BaseObject() = default;
 
-    BaseObject() : visible(true), focus(false) {}
+    size_t getId() const;
 
-    virtual bool add(std::shared_ptr<BaseObject> obj) { return false; }
-    virtual bool remove(Iterator iter) { return false; }
-    virtual Iterator begin() { return Iterator(); }
-    virtual Iterator end() { return Iterator(); }
+    const std::string &getName() const;
+    void setName(const std::string &newName);
 
-    virtual bool isComposite() const { return false; }
+    const Transform &getTransform() const;
+    void setTransform(const Transform &newTransform);
 
-    bool getVisibility() const { return visible; }
-    void setVisibility(bool visibility) { visible = visibility; }
+    bool getVisibility() const;
+    void setVisibility(bool visibility);
 
-    bool getFocus() const { return focus; }
-    void setFocus(bool focused) { focus = focused; }
+    virtual bool isComposite() const;
+
+    virtual bool insertChild(Iterator pos, std::shared_ptr<BaseObject> obj);
+    virtual bool removeChild(Iterator pos);
+
+    virtual Iterator begin();
+    virtual Iterator end();
+
+    virtual void accept(IVisitor &visitor) = 0;
+
 private:
+    size_t id;
+    std::string name;
+    Transform transform;
     bool visible;
-    bool focus;
 };
