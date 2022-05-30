@@ -1,7 +1,7 @@
 #include "baseobject.hpp"
 
-BaseObject::BaseObject(size_t id, const std::string &name, const Transform &transform)
-    : id(id), name(name), transform(transform), visible(true)
+BaseObject::BaseObject(size_t id, const std::string &name, const Matrix &matrix)
+    : id(id), name(name), matrix(matrix), visible(true)
 {
 }
 
@@ -20,14 +20,14 @@ void BaseObject::setName(const std::string &newName)
     name = newName;
 }
 
-const Transform &BaseObject::getTransform() const
+const Matrix &BaseObject::getMatrix() const
 {
-    return transform;
+    return matrix;
 }
 
-void BaseObject::setTransform(const Transform &newTransform)
+void BaseObject::setMatrix(const Matrix &newTransform)
 {
-    transform = newTransform;
+    matrix = newTransform;
 }
 
 bool BaseObject::getVisibility() const

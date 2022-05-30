@@ -19,8 +19,8 @@ void RenderVisitor::visit(Model &model)
     auto points = details.getPoints();
     auto edges = details.getEdges();
 
-    auto view = camera.getTransform().toMatrix().inverse();
-    auto mvp = view * model.getTransform().toMatrix();
+    auto view = camera.getMatrix().inverse();
+    auto mvp = view * model.getMatrix();
 
     for (auto edge : edges)
     {

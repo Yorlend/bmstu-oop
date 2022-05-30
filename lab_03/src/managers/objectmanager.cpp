@@ -45,15 +45,19 @@ void ObjectManager::addCamera(const Vector &position, const Vector &eye)
 
     std::shared_ptr<BaseObject> camera = defaultCameraDirector->construct();
 
-    camera->setTransform(Matrix::fpsModel(position, 0, 0));
+    camera->setMatrix(Matrix::fpsModel(position, eye));
 
     scene.insertObject(scene.end(), camera);
 }
 
-void ObjectManager::transformObject(size_t id, const Transform &transform)
+void ObjectManager::transformObject(size_t id, const Matrix &transform)
 {
     auto &scene = dataRepository->getScene();
+    auto object = *scene.findObjectById(id);
 
-    /// TODO: do
-    throw std::runtime_error("todo");
+    auto old_trans = object->getMatrix();
+
+    auto new_trans = transform * old_trans;
+
+    object->setMatrix(new_trans);
 }

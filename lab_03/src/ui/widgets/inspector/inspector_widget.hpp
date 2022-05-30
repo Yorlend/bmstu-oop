@@ -19,7 +19,13 @@ public:
 public slots:
     void showInfoAbout(const std::list<size_t> &objIds);
 
+    void translateAction();
+    void rotateAction();
+    void scaleAction();
+
 private:
     Ui::InspectorWidget *ui;
     std::shared_ptr<Facade> facade;
+
+    std::list<size_t> selectedIds;
 };

@@ -12,10 +12,13 @@ public:
     static Matrix translate(const Vector &offset);
     static Matrix rotate(const Vector &axis, double angle);
     static Matrix rotate(const Vector &angles);
+    static Matrix rotate(const Vector &offset, const Vector &angles);
     static Matrix scale(double fx, double fy, double fz);
     static Matrix scale(const Vector &factors);
+    static Matrix scale(const Vector &offset, const Vector &factors);
     static Matrix perspective(double fov, double near, double far);
 
+    static Matrix fpsModel(const Vector &eye, Vector look);
     static Matrix fpsModel(const Vector &eye, double pitch, double yaw);
     static Matrix trsModel(const Vector &position, const Vector &rotation, const Vector &scale);
 

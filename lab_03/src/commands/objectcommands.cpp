@@ -32,7 +32,7 @@ void AddCameraCommand::execute(ManagerProvider &managerProvider)
     managerProvider.get<ObjectManager>().addCamera(position, eye);
 }
 
-TransformObjectCommand::TransformObjectCommand(size_t objectId, const Transform &transform)
+TransformObjectCommand::TransformObjectCommand(size_t objectId, const Matrix &transform)
     : objectId(objectId), transform(transform)
 {
 }

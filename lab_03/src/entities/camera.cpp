@@ -1,8 +1,8 @@
 #include "camera.hpp"
 #include "visitor/ivisitor.hpp"
 
-Camera::Camera(std::shared_ptr<ICameraImpl> cameraImpl, size_t id, const std::string &name, const Transform &transform)
-    : BaseObject(id, name, transform), cameraImpl(std::move(cameraImpl))
+Camera::Camera(std::shared_ptr<ICameraImpl> cameraImpl, size_t id, const std::string &name, const Matrix &matrix)
+    : BaseObject(id, name, matrix), cameraImpl(std::move(cameraImpl))
 {
 }
 

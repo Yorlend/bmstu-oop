@@ -35,7 +35,7 @@ const std::string &BaseObjectBuilder::getName()
     return name;
 }
 
-Transform BaseObjectBuilder::buildTransform()
+Matrix BaseObjectBuilder::buildTransform()
 {
-    return Transform(position, rotation, scale);
+    return Matrix::trsModel(position, rotation, scale);
 }

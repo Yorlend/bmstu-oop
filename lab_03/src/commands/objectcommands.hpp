@@ -41,11 +41,11 @@ private:
 class TransformObjectCommand : public ICommand
 {
 public:
-    TransformObjectCommand(size_t objectId, const Transform &transform);
+    TransformObjectCommand(size_t objectId, const Matrix &transform);
 
     virtual void execute(ManagerProvider &managerProvider) override;
 
 private:
     size_t objectId;
-    Transform transform;
+    Matrix transform;
 };

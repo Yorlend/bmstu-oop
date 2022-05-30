@@ -16,8 +16,8 @@ std::unique_ptr<BaseObject> ModelBuidler::build()
 {
     auto id = getId();
     auto name = getName();
-    auto transform = buildTransform();
+    auto matrix = buildTransform();
 
     auto details = std::shared_ptr<IModelImpl>(new WireframeImpl(points, edges));
-    return std::unique_ptr<BaseObject>(new Model(details, id, name, transform));
+    return std::unique_ptr<BaseObject>(new Model(details, id, name, matrix));
 }

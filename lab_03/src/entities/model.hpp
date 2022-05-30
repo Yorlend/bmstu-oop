@@ -7,7 +7,7 @@
 class Model : public BaseObject
 {
 public:
-    Model(std::shared_ptr<IModelImpl> modelImpl, size_t id, const std::string &name = "Model", const Transform &transform = Transform());
+    Model(std::shared_ptr<IModelImpl> modelImpl, size_t id, const std::string &name = "Model", const Matrix &matrix = Matrix::identity());
 
     virtual void accept(IVisitor &visitor) override;
 

@@ -13,7 +13,7 @@ public:
     using Iterator = std::list<std::shared_ptr<BaseObject>>::iterator;
     using ConstIterator = std::list<std::shared_ptr<BaseObject>>::const_iterator;
 
-    BaseObject(size_t id, const std::string &name = "BaseObject", const Transform &transform = Transform());
+    BaseObject(size_t id, const std::string &name = "BaseObject", const Matrix &matrix = Matrix::identity());
     virtual ~BaseObject() = default;
 
     size_t getId() const;
@@ -21,8 +21,8 @@ public:
     const std::string &getName() const;
     void setName(const std::string &newName);
 
-    const Transform &getTransform() const;
-    void setTransform(const Transform &newTransform);
+    const Matrix &getMatrix() const;
+    void setMatrix(const Matrix &newMatrix);
 
     bool getVisibility() const;
     void setVisibility(bool visibility);
@@ -40,6 +40,6 @@ public:
 private:
     size_t id;
     std::string name;
-    Transform transform;
+    Matrix matrix;
     bool visible;
 };

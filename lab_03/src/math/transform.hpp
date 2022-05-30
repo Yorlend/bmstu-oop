@@ -7,7 +7,7 @@ class Transform
 {
 public:
     Transform() = default;
-    Transform(const Matrix& matrix);
+    // Transform(const Matrix& matrix);
     Transform(const Vector &position, const Vector &rotation, const Vector &scale);
 
     const Vector &getPosition() const;

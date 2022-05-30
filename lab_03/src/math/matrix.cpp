@@ -68,6 +68,11 @@ Matrix Matrix::rotate(const Vector &angles)
     return mz * my * mx;
 }
 
+Matrix Matrix::rotate(const Vector &offset, const Vector &angles)
+{
+    return translate(-offset) * rotate(angles) * translate(offset);
+}
+
 Matrix Matrix::scale(double fx, double fy, double fz)
 {
     Matrix res = identity();
@@ -82,6 +87,11 @@ Matrix Matrix::scale(double fx, double fy, double fz)
 Matrix Matrix::scale(const Vector &factors)
 {
     return scale(factors.getX(), factors.getY(), factors.getZ());
+}
+
+Matrix Matrix::scale(const Vector &offset, const Vector &factors)
+{
+    return translate(-offset) * scale(factors) * translate(offset);
 }
 
 Matrix Matrix::perspective(double fov, double near, double far)
@@ -283,6 +293,16 @@ Vector Matrix::row(size_t index) const
 Vector Matrix::col(size_t index) const
 {
     return Vector(at(0, index), at(1, index), at(2, index), at(3, index));
+}
+
+Matrix Matrix::fpsModel(const Vector &eye, Vector look)
+{
+    look.normalize();
+
+    double pitch = std::acos(-look.getZ() / std::sqrt(1 - look.getY()));
+    double yaw = std::asin(look.getY());
+
+    return fpsModel(eye, pitch, yaw);
 }
 
 Matrix Matrix::fpsModel(const Vector &eye, double pitch, double yaw)

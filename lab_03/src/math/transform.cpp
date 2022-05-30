@@ -6,50 +6,50 @@ inline double toRad(const double angle)
     return angle * (M_PI / 180);
 }
 
-Transform::Transform(const Matrix &matrix)
-{
-    position = matrix.col(3);
+// Transform::Transform(const Matrix &matrix)
+// {
+//     position = matrix.col(3);
 
-    scaling.setX(matrix.col(0).length());
-    scaling.setY(matrix.col(1).length());
-    scaling.setZ(matrix.col(2).length());
+//     scaling.setX(matrix.col(0).length());
+//     scaling.setY(matrix.col(1).length());
+//     scaling.setZ(matrix.col(2).length());
 
-    double r31 = matrix.at(2, 0) / scaling.getX();
-    double r32 = matrix.at(2, 1) / scaling.getY();
-    double r33 = matrix.at(2, 2) / scaling.getZ();
+//     double r31 = matrix.at(2, 0) / scaling.getX();
+//     double r32 = matrix.at(2, 1) / scaling.getY();
+//     double r33 = matrix.at(2, 2) / scaling.getZ();
 
-    double r21 = matrix.at(1, 0) / scaling.getX();
-    double r11 = matrix.at(0, 0) / scaling.getX();
+//     double r21 = matrix.at(1, 0) / scaling.getX();
+//     double r11 = matrix.at(0, 0) / scaling.getX();
 
-    double r12 = matrix.at(0, 1) / scaling.getY();
-    double r13 = matrix.at(0, 2) / scaling.getZ();
+//     double r12 = matrix.at(0, 1) / scaling.getY();
+//     double r13 = matrix.at(0, 2) / scaling.getZ();
 
-    double theta, phi, psi;
+//     double theta, phi, psi;
 
-    if (r31 * r31 - 1.0 > 1e-6)
-    {
-        theta = -std::asin(r31);
-        double cosTheta = std::cos(theta);
-        psi = std::atan2(r32 / cosTheta, r33 / cosTheta);
-        phi = std::atan2(r21 / cosTheta, r11 / cosTheta);
-    }
-    else
-    {
-        phi = 0;
-        if (std::abs(r31 + 1.0) < 1e-3)
-        {
-            theta = M_PI_2;
-            psi = phi + atan2(r12, r13);
-        }
-        else
-        {
-            theta = -M_PI_2;
-            psi = -phi + atan2(-r12, -r13);
-        }
-    }
+//     if (std::abs(r31 * r31 - 1.0) > 1e-6)
+//     {
+//         theta = -std::asin(r31);
+//         double cosTheta = std::cos(theta);
+//         psi = std::atan2(r32 / cosTheta, r33 / cosTheta);
+//         phi = std::atan2(r21 / cosTheta, r11 / cosTheta);
+//     }
+//     else
+//     {
+//         phi = 0;
+//         if (std::abs(r31 + 1.0) < 1e-3)
+//         {
+//             theta = M_PI_2;
+//             psi = phi + atan2(r12, r13);
+//         }
+//         else
+//         {
+//             theta = -M_PI_2;
+//             psi = -phi + atan2(-r12, -r13);
+//         }
+//     }
 
-    rotation = Vector(psi, theta, phi);
-}
+//     rotation = Vector(psi, theta, phi);
+// }
 
 Transform::Transform(const Vector &position, const Vector &rotation, const Vector &scale)
     : position(position), rotation(rotation), scaling(scale) {}
@@ -64,11 +64,15 @@ void Transform::setScale(const Vector &newScale) { scaling = newScale; }
 
 Matrix Transform::toMatrix() const
 {
+    if (position.getW() != 1.0 || rotation.getW() != 0.0 || scaling.getW() != 0.0)
+        throw std::runtime_error("bad state");
+
     return Matrix::trsModel(position, rotation, scaling);
 }
 
 Vector Transform::apply(const Vector &vec) const
 {
+    throw std::runtime_error("degrees");
     return move(rotate(scale(vec)));
 }
 

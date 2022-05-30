@@ -17,7 +17,7 @@ public:
 
     void addCamera(const Vector &position, const Vector &eye);
 
-    void transformObject(size_t id, const Transform &transform);
+    void transformObject(size_t id, const Matrix &transform);
 
 private:
     std::shared_ptr<DataRepository> dataRepository;

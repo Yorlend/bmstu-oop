@@ -28,7 +28,7 @@ protected:
     size_t getId();
     const std::string &getName();
 
-    Transform buildTransform();
+    Matrix buildTransform();
 
 private:
     size_t id;

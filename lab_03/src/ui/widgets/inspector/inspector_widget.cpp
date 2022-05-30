@@ -9,6 +9,10 @@ InspectorWidget::InspectorWidget(QWidget *parent)
     : QWidget(parent), ui(new Ui::InspectorWidget)
 {
     ui->setupUi(this);
+
+    connect(ui->applyTranslation, &QPushButton::clicked, this, &InspectorWidget::translateAction);
+    connect(ui->applyRotation, &QPushButton::clicked, this, &InspectorWidget::rotateAction);
+    connect(ui->applyScaling, &QPushButton::clicked, this, &InspectorWidget::scaleAction);
 }
 
 InspectorWidget::~InspectorWidget()
@@ -23,7 +27,10 @@ void InspectorWidget::setFacade(std::shared_ptr<Facade> newFacade)
 
 void InspectorWidget::showInfoAbout(const std::list<size_t> &objIds)
 {
-    GetInfoAboutCommand cmd(objIds, [this](std::shared_ptr<BaseObject> object){
+    selectedIds = objIds;
+
+    GetInfoAboutCommand cmd(objIds, [this](std::shared_ptr<BaseObject> object)
+                            {
         if (object->isComposite())
         {
             std::string ids = "";
@@ -38,8 +45,69 @@ void InspectorWidget::showInfoAbout(const std::list<size_t> &objIds)
         {
             ui->idLineEdit->setText(QString::fromStdString(std::to_string(object->getId())));
             ui->nameLineEdit->setText(QString::fromStdString(object->getName()));
-        }
-    });
+        } });
 
+    facade->execute(cmd);
+}
+
+void InspectorWidget::translateAction()
+{
+    double dx = ui->dx->value();
+    double dy = ui->dy->value();
+    double dz = ui->dz->value();
+
+    auto mat = Matrix::translate({dx, dy, dz});
+
+    for (auto id : selectedIds)
+    {
+        TransformObjectCommand cmd(id, mat);
+        facade->execute(cmd);
+    }
+
+    RenderSceneCommand cmd;
+    facade->execute(cmd);
+}
+
+void InspectorWidget::rotateAction()
+{
+    double cx = ui->cx->value();
+    double cy = ui->cy->value();
+    double cz = ui->cz->value();
+
+    double rx = ui->rx->value();
+    double ry = ui->ry->value();
+    double rz = ui->rz->value();
+
+    auto mat = Matrix::rotate({cx, cy, cz}, {rx, ry, rz});
+
+    for (auto id : selectedIds)
+    {
+        TransformObjectCommand cmd(id, mat);
+        facade->execute(cmd);
+    }
+
+    RenderSceneCommand cmd;
+    facade->execute(cmd);
+}
+
+void InspectorWidget::scaleAction()
+{
+    double cx = ui->cx->value();
+    double cy = ui->cy->value();
+    double cz = ui->cz->value();
+
+    double sx = ui->sx->value();
+    double sy = ui->sy->value();
+    double sz = ui->sz->value();
+
+    auto mat = Matrix::scale({cx, cy, cz}, {sx, sy, sz});
+
+    for (auto id : selectedIds)
+    {
+        TransformObjectCommand cmd(id, mat);
+        facade->execute(cmd);
+    }
+
+    RenderSceneCommand cmd;
     facade->execute(cmd);
 }

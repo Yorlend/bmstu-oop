@@ -17,8 +17,8 @@ std::unique_ptr<BaseObject> CameraBuilder::build()
 {
     auto id = getId();
     auto name = getName();
-    auto transform = buildTransform();
+    auto matrix = buildTransform();
 
     auto details = std::shared_ptr<ICameraImpl>(new OrthoCameraImpl());
-    return std::unique_ptr<BaseObject>(new Camera(details, id, name, transform));
+    return std::unique_ptr<BaseObject>(new Camera(details, id, name, matrix));
 }

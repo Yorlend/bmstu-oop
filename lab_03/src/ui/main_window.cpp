@@ -32,6 +32,8 @@ MainWindow::MainWindow(Solution &solution)
     ui->hierarchyWidget->setFacade(facade);
     ui->inspectorWidget->setFacade(facade);
 
+    ui->viewport->setSceneRect(QRectF(-450, -450, 900, 900));
+
     {
         CreateNewSceneCommand cmd;
         facade->execute(cmd);

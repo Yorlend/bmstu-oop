@@ -1,8 +1,8 @@
 #include "model.hpp"
 #include "visitor/ivisitor.hpp"
 
-Model::Model(std::shared_ptr<IModelImpl> modelImpl, size_t id, const std::string &name, const Transform &transform)
-    : BaseObject(id, name, transform), modelImpl(std::move(modelImpl))
+Model::Model(std::shared_ptr<IModelImpl> modelImpl, size_t id, const std::string &name, const Matrix &matrix)
+    : BaseObject(id, name, matrix), modelImpl(std::move(modelImpl))
 {
 }
 
