@@ -12,7 +12,6 @@ public:
     CameraManager(Solution &solution);
 
     void switchNextCamera();
-    void switchPrevCamera();
 
 private:
     std::shared_ptr<DataRepository> dataRepository;

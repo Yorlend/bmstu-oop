@@ -5,6 +5,7 @@
 class Scene
 {
 public:
+    using ConstIterator = BaseObject::ConstIterator;
     using Iterator = BaseObject::Iterator;
 
     Scene();
@@ -19,6 +20,9 @@ public:
 
     Iterator begin();
     Iterator end();
+
+    ConstIterator begin() const;
+    ConstIterator end() const;
 
 private:
     std::unique_ptr<BaseObject> objects;

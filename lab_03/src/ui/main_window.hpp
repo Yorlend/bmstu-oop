@@ -16,6 +16,11 @@ public:
     MainWindow(Solution& solution);
     ~MainWindow();
 
+protected slots:
+    void onLoadAction();
+    void onSwitchToNextCamera();
+    void onAddNewCamera();
+
 private:
     Ui::MainWindow* ui;
 

@@ -1,20 +1,13 @@
 #pragma once
 
-#include "renderer/irenderer.hpp"
 #include "ivisitor.hpp"
 
-class Camera;
-
-class RenderVisitor : public IVisitor
+class TransformVisitor : public IVisitor
 {
 public:
-    RenderVisitor(IRenderer& renderer, Camera& camera);
+    TransformVisitor() = default;
 
     virtual void visit(Camera &camera) override;
     virtual void visit(Model &model) override;
     virtual void visit(ObjectGroup &group) override;
-
-private:
-    IRenderer& renderer;
-    Camera& camera;
 };

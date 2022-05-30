@@ -40,3 +40,13 @@ BaseObject::Iterator Scene::end()
 {
     return objects->end();
 }
+
+BaseObject::ConstIterator Scene::begin() const
+{
+    return objects->begin();
+}
+
+BaseObject::ConstIterator Scene::end() const
+{
+    return objects->end();
+}

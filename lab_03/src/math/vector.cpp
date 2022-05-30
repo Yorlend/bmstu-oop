@@ -5,13 +5,13 @@
 Vector::Vector(double xPos, double yPos, double zPos, double wDir) noexcept
     : x(xPos), y(yPos), z(zPos), w(wDir) {}
 
-Vector::Vector(const std::initializer_list<double>& init)
+Vector::Vector(const std::initializer_list<double> &init)
 {
     int init_size = init.size();
 
     if (init_size != 3 && init_size != 4)
         throw std::runtime_error("Bad initializer list size");
-    
+
     auto beg = init.begin();
     x = *beg++;
     y = *beg++;
@@ -73,12 +73,22 @@ void Vector::normalize()
     *this = ~*this;
 }
 
-Vector Vector::operator+(const Vector& other) const
+double Vector::dot(const Vector &other) const
+{
+    return x * other.x + y * other.y + z * other.z;
+}
+
+Vector Vector::operator-() const
+{
+    return Vector(-x, -y, -z, w);
+}
+
+Vector Vector::operator+(const Vector &other) const
 {
     return Vector(x + other.x, y + other.y, z + other.z, w + other.w);
 }
 
-Vector& Vector::operator+=(const Vector& other)
+Vector &Vector::operator+=(const Vector &other)
 {
     x += other.x;
     y += other.y;
@@ -88,12 +98,12 @@ Vector& Vector::operator+=(const Vector& other)
     return *this;
 }
 
-Vector Vector::operator-(const Vector& other) const
+Vector Vector::operator-(const Vector &other) const
 {
     return Vector(x - other.x, y - other.y, z - other.z, w - other.w);
 }
 
-Vector& Vector::operator-=(const Vector& other)
+Vector &Vector::operator-=(const Vector &other)
 {
     x -= other.x;
     y -= other.y;
@@ -103,12 +113,12 @@ Vector& Vector::operator-=(const Vector& other)
     return *this;
 }
 
-Vector Vector::operator*(const Vector& other) const
+Vector Vector::operator*(const Vector &other) const
 {
     return Vector(x * other.x, y * other.y, z * other.z, w * other.w);
 }
 
-Vector& Vector::operator*=(const Vector& other)
+Vector &Vector::operator*=(const Vector &other)
 {
     x *= other.x;
     y *= other.y;
@@ -123,7 +133,7 @@ Vector Vector::operator*(double mul) const
     return Vector(x * mul, y * mul, z * mul, w * mul);
 }
 
-Vector& Vector::operator*=(double mul)
+Vector &Vector::operator*=(double mul)
 {
     x *= mul;
     y *= mul;
@@ -140,13 +150,13 @@ Vector Vector::operator~() const
     return Vector(x / len, y / len, z / len);
 }
 
-std::ostream& operator<<(std::ostream& stream, const Vector& vec)
+std::ostream &operator<<(std::ostream &stream, const Vector &vec)
 {
     stream << "{ " << vec.getX() << ", " << vec.getY() << ", " << vec.getZ() << " }";
     return stream;
 }
 
-Vector operator*(double mul, const Vector& vec)
+Vector operator*(double mul, const Vector &vec)
 {
     return Vector(vec.getX() * mul, vec.getY() * mul, vec.getZ() * mul, vec.getW() * mul);
 }

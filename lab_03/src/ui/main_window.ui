@@ -39,8 +39,43 @@
      <height>24</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuLoad">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionLoad"/>
+   </widget>
+   <widget class="QMenu" name="menuCamera">
+    <property name="title">
+     <string>Camera</string>
+    </property>
+    <addaction name="actionAddNewCamera"/>
+    <addaction name="actionSwitchNext"/>
+   </widget>
+   <addaction name="menuLoad"/>
+   <addaction name="menuCamera"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionLoad">
+   <property name="text">
+    <string>Load</string>
+   </property>
+  </action>
+  <action name="actionSwitchNext">
+   <property name="text">
+    <string>Switch to next</string>
+   </property>
+  </action>
+  <action name="actionSwitchPrev">
+   <property name="text">
+    <string>Switch to prev</string>
+   </property>
+  </action>
+  <action name="actionAddNewCamera">
+   <property name="text">
+    <string>Add new</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

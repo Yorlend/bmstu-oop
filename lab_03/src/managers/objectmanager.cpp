@@ -3,11 +3,14 @@
 #include "solution/configuration.hpp"
 #include "io/filereader.hpp"
 #include "builder/modelbuilder.hpp"
+#include "builder/camerabuilder.hpp"
+#include "directors/defaultcamdirector.hpp"
 //#include "visitor/transformvisitor.hpp"
 
 ObjectManager::ObjectManager(Solution &solution)
     : dataRepository(solution.getDataRepository(DEFAULT_DATA_REPOSITORY)),
-      importDirector(solution.getObjectDirector(MODEL_DIRECTOR))
+      importDirector(solution.getObjectDirector(MODEL_DIRECTOR)),
+      defaultCameraDirector(solution.getObjectDirector(DEFAULT_CAMERA_DIRECTOR))
 {
 }
 
@@ -33,10 +36,24 @@ void ObjectManager::removeObject(size_t id)
         scene.removeObject(iter);
 }
 
+void ObjectManager::addCamera(const Vector &position, const Vector &eye)
+{
+    auto &scene = dataRepository->getScene();
+
+    CameraBuilder builder;
+    defaultCameraDirector->setBuilder(builder);
+
+    std::shared_ptr<BaseObject> camera = defaultCameraDirector->construct();
+
+    camera->setTransform(Matrix::fpsModel(position, 0, 0));
+
+    scene.insertObject(scene.end(), camera);
+}
+
 void ObjectManager::transformObject(size_t id, const Transform &transform)
 {
     auto &scene = dataRepository->getScene();
 
-    ///TODO: do
+    /// TODO: do
     throw std::runtime_error("todo");
 }

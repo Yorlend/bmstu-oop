@@ -11,6 +11,7 @@ class BaseObject
 {
 public:
     using Iterator = std::list<std::shared_ptr<BaseObject>>::iterator;
+    using ConstIterator = std::list<std::shared_ptr<BaseObject>>::const_iterator;
 
     BaseObject(size_t id, const std::string &name = "BaseObject", const Transform &transform = Transform());
     virtual ~BaseObject() = default;

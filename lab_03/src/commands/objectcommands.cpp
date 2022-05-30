@@ -22,6 +22,16 @@ void RemoveObjectCommand::execute(ManagerProvider &managerProvider)
     managerProvider.get<ObjectManager>().removeObject(objectId);
 }
 
+AddCameraCommand::AddCameraCommand(const Vector &position, const Vector &eye)
+    : position(position), eye(eye)
+{
+}
+
+void AddCameraCommand::execute(ManagerProvider &managerProvider)
+{
+    managerProvider.get<ObjectManager>().addCamera(position, eye);
+}
+
 TransformObjectCommand::TransformObjectCommand(size_t objectId, const Transform &transform)
     : objectId(objectId), transform(transform)
 {

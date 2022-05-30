@@ -34,7 +34,7 @@ private:
     size_t id;
     std::string name;
 
-    Vector position;
-    Vector rotation;
-    Vector scale;
+    Vector position = Vector(0, 0, 0, 1);
+    Vector rotation = Vector(0, 0, 0, 0);
+    Vector scale = Vector(1, 1, 1, 0);
 };

@@ -23,6 +23,10 @@ public:
 
     void normalize();
 
+    double dot(const Vector &other) const;
+
+    Vector operator-() const;
+
     Vector operator+(const Vector &other) const;
     Vector &operator+=(const Vector &other);
 

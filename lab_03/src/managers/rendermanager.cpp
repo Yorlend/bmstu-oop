@@ -2,6 +2,7 @@
 #include "solution/solution.hpp"
 #include "solution/configuration.hpp"
 #include "visitor/rendervisitor.hpp"
+#include "entities/camera.hpp"
 
 RenderManager::RenderManager(Solution &solution)
     : dataRepository(solution.getDataRepository(DEFAULT_DATA_REPOSITORY)),
@@ -15,7 +16,7 @@ void RenderManager::renderScene()
     auto camera = dataRepository->getActiveCamera();
 
     auto renderer = renderFactory->createRenderer();
-    auto visitor = RenderVisitor(*renderer);
+    auto visitor = RenderVisitor(*renderer, *dynamic_cast<Camera*>(camera.get()));
 
     renderer->clear();
     scene.accept(visitor);

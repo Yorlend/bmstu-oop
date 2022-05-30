@@ -6,8 +6,3 @@ void SwitchNextCameraCommand::execute(ManagerProvider &managerProvider)
 {
     managerProvider.get<CameraManager>().switchNextCamera();
 }
-
-void SwitchPrevCameraCommand::execute(ManagerProvider &managerProvider)
-{
-    managerProvider.get<CameraManager>().switchPrevCamera();
-}

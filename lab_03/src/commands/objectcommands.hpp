@@ -26,6 +26,18 @@ private:
     size_t objectId;
 };
 
+class AddCameraCommand : public ICommand
+{
+public:
+    AddCameraCommand(const Vector& position, const Vector &eye);
+
+    virtual void execute(ManagerProvider &managerProvider) override;
+
+private:
+    Vector position;
+    Vector eye;
+};
+
 class TransformObjectCommand : public ICommand
 {
 public:
