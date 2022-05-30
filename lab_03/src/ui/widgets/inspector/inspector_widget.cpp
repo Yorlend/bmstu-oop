@@ -45,6 +45,7 @@ void InspectorWidget::showInfoAbout(const std::list<size_t> &objIds)
         {
             ui->idLineEdit->setText(QString::fromStdString(std::to_string(object->getId())));
             ui->nameLineEdit->setText(QString::fromStdString(object->getName()));
+            // ui->visibleBox->setChecked(object->getVisibility());
         } });
 
     facade->execute(cmd);
