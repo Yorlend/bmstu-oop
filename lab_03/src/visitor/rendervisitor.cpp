@@ -14,6 +14,10 @@ void RenderVisitor::visit(Camera &camera)
 
 void RenderVisitor::visit(Model &model)
 {
+    if (!model.getVisibility())
+        return;
+
+    
     auto &details = model.getDetails();
 
     auto points = details.getPoints();

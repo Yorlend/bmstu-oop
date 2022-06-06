@@ -5,7 +5,7 @@
 #include "builder/modelbuilder.hpp"
 #include "builder/camerabuilder.hpp"
 #include "directors/defaultcamdirector.hpp"
-//#include "visitor/transformvisitor.hpp"
+#include "visitor/transformvisitor.hpp"
 
 ObjectManager::ObjectManager(Solution &solution)
     : dataRepository(solution.getDataRepository(DEFAULT_DATA_REPOSITORY)),
@@ -53,11 +53,8 @@ void ObjectManager::addCamera(const Vector &position, const Vector &eye)
 void ObjectManager::transformObject(size_t id, const Matrix &transform)
 {
     auto &scene = dataRepository->getScene();
-    auto object = *scene.findObjectById(id);
+    
+    TransformVisitor visitor(id, transform);
 
-    auto old_trans = object->getMatrix();
-
-    auto new_trans = transform * old_trans;
-
-    object->setMatrix(new_trans);
+    scene.accept(visitor);
 }
